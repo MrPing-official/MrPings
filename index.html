@@ -115,6 +115,15 @@
       border-radius: 6px;
       cursor: pointer;
     }
+    .comment-list {
+      margin-top: 1rem;
+    }
+    .comment {
+      background: #f3f4f6;
+      padding: 0.7rem;
+      border-radius: 6px;
+      margin-bottom: 0.5rem;
+    }
   </style>
 </head>
 <body>
@@ -124,14 +133,14 @@
       <svg xmlns="http://www.w3.org/2000/svg" fill="yellow" viewBox="0 0 24 24"><path d="M12 2a6 6 0 0 0-6 6c0 2.2 1.2 4.1 3 5.2V15a4 4 0 0 0 8 0v-1.8c1.8-1.1 3-3 3-5.2a6 6 0 0 0-6-6z"/></svg>
       haertfelder.me
     </div>
-    <button>Anmelden</button>
+    <button onclick="login()">Anmelden</button>
   </header>
 
   <main>
     <div class="welcome">
       <h1>Willkommen auf meinem Blog!</h1>
       <p>Hier teile ich meine Gedanken, Ideen und Projekte.</p>
-      <button>Blog betreten</button>
+      <button onclick="enterBlog()">Blog betreten</button>
     </div>
     <div class="video-box">
       <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
@@ -146,11 +155,45 @@
     </div>
     <div class="card comments">
       <h2>Kommentare</h2>
-      <form>
-        <textarea placeholder="Schreibe einen Kommentar..."></textarea>
+      <form onsubmit="addComment(event)">
+        <textarea id="commentInput" placeholder="Schreibe einen Kommentar..."></textarea>
         <button type="submit">Absenden</button>
       </form>
+      <div class="comment-list" id="commentList"></div>
     </div>
   </section>
+
+  <script>
+    // Login mit Passwort (einfach, lokal)
+    function login() {
+      const pw = prompt("Bitte Passwort eingeben:");
+      if (pw === "meinPasswort123") {
+        alert("Willkommen, Admin!");
+        // Hier könnte später das Schreib-Interface geladen werden
+      } else {
+        alert("Falsches Passwort!");
+      }
+    }
+
+    // Blog-Button
+    function enterBlog() {
+      login();
+    }
+
+    // Kommentare hinzufügen
+    function addComment(event) {
+      event.preventDefault();
+      const input = document.getElementById("commentInput");
+      const text = input.value.trim();
+      if (text) {
+        const list = document.getElementById("commentList");
+        const newComment = document.createElement("div");
+        newComment.className = "comment";
+        newComment.textContent = text;
+        list.appendChild(newComment);
+        input.value = "";
+      }
+    }
+  </script>
 </body>
 </html>
