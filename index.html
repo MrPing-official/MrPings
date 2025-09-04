@@ -2,196 +2,141 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>haertfelder.me</title>
   <style>
-    :root {
-      --bg: #f9fafb;
-      --text: #111827;
-      --card-bg: white;
-      --accent: #2563eb;
-    }
-    body.dark {
-      --bg: #0f172a;
-      --text: #f9fafb;
-      --card-bg: #1e293b;
-    }
     body {
       font-family: system-ui, sans-serif;
       margin: 0;
-      background: var(--bg);
-      color: var(--text);
-      transition: background 0.3s, color 0.3s;
+      background: #121212;
+      color: #fff;
     }
     header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 1rem 2rem;
-      background: var(--card-bg);
-      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-      transition: background 0.3s;
+      background: #1e1e1e;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
     }
-    header .logo {
+    header h1 {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
-      font-weight: bold;
-      font-size: 1.2rem;
+      font-size: 1.5rem;
     }
-    header .logo svg {
+    header img {
       width: 32px;
       height: 32px;
-    }
-    header .actions {
-      display: flex;
-      gap: 0.5rem;
+      margin-right: 0.5rem;
     }
     header button {
-      background: var(--accent);
+      background: #007bff;
       color: white;
+      padding: 0.6rem 1rem;
       border: none;
-      border-radius: 8px;
-      padding: 0.5rem 1rem;
+      border-radius: 6px;
       cursor: pointer;
-      font-size: 1rem;
     }
     main {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 2fr 1fr;
       gap: 2rem;
       padding: 2rem;
     }
-    .welcome {
-      background: var(--card-bg);
-      padding: 2rem;
-      border-radius: 12px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-    }
-    .welcome h1 {
-      margin-top: 0;
-    }
-    .welcome button {
-      margin-top: 1rem;
-      background: var(--text);
-      color: var(--bg);
-      border: none;
-      padding: 0.7rem 1.2rem;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-    .video-box {
-      background: #0f172a;
-      padding: 1rem;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .video-box iframe {
-      width: 100%;
-      height: 315px;
-      border-radius: 8px;
-      border: none;
-    }
-    section.cards {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
-      padding: 2rem;
-    }
     .card {
-      background: var(--card-bg);
+      background: #1e1e1e;
       border-radius: 12px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
       padding: 1.5rem;
-    }
-    .card h2 {
-      margin-top: 0;
-    }
-    .comments form {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+      margin-bottom: 1.5rem;
     }
     .comments textarea {
       width: 100%;
-      min-height: 80px;
       padding: 0.5rem;
       border-radius: 6px;
-      border: 1px solid #ccc;
-      font-family: inherit;
-    }
-    .comments button {
-      align-self: flex-start;
-      background: var(--accent);
-      color: white;
       border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-    .comment-list {
-      margin-top: 1rem;
+      margin-bottom: 0.5rem;
     }
     .comment {
-      background: #f3f4f6;
-      color: black;
-      padding: 0.7rem;
+      background: #2a2a2a;
+      padding: 0.5rem;
       border-radius: 6px;
       margin-bottom: 0.5rem;
     }
-    body.dark .comment {
-      background: #334155;
+    .blog h2 {
+      margin-top: 2rem;
+    }
+    .blog .card h3 {
+      margin: 0;
+      cursor: pointer;
+    }
+    .blog .card p {
+      margin-top: 0.5rem;
+    }
+    button {
+      background: #007bff;
       color: white;
+      padding: 0.4rem 0.8rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
     }
   </style>
 </head>
 <body>
   <header>
-    <div class="logo">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="yellow" viewBox="0 0 24 24"><path d="M12 2a6 6 0 0 0-6 6c0 2.2 1.2 4.1 3 5.2V15a4 4 0 0 0 8 0v-1.8c1.8-1.1 3-3 3-5.2a6 6 0 0 0-6-6z"/></svg>
-      haertfelder.me
-    </div>
-    <div class="actions">
-      <button onclick="toggleDarkmode()">🌙</button>
-      <button onclick="login()">Anmelden</button>
-    </div>
+    <h1><img src="assets/ente.png" alt="Logo"> haertfelder.me</h1>
+    <button onclick="login()">Anmelden</button>
   </header>
 
   <main>
-    <div class="welcome">
-      <h1>Willkommen auf meinem Blog!</h1>
-      <p>Hier teile ich meine Gedanken, Ideen und Projekte.</p>
-      <button onclick="enterBlog()">Blog betreten</button>
+    <!-- Linke Seite -->
+    <div>
+      <div class="card">
+        <h2>Willkommen!</h2>
+        <p>Schön, dass du hier bist. Dies ist mein persönlicher Blog für Gedanken, Ideen und mehr.</p>
+      </div>
+
+      <section class="cards">
+        <div class="card">
+          <h2>Über mich</h2>
+          <p>Hier kannst du ein paar Worte über dich schreiben – wer du bist, was du machst und was dich interessiert.</p>
+        </div>
+
+        <div class="card comments">
+          <h2>Kommentare</h2>
+          <form onsubmit="addComment(event)">
+            <textarea id="commentInput" placeholder="Schreibe einen Kommentar..."></textarea>
+            <button type="submit">Absenden</button>
+          </form>
+          <div class="comment-list" id="commentList"></div>
+        </div>
+      </section>
+
+      <!-- Blogbereich -->
+      <section class="blog" id="blog">
+        <h2>Blogeinträge</h2>
+        <div id="blogList"></div>
+      </section>
     </div>
-    <div class="video-box">
-      <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
-              title="YouTube video" allowfullscreen></iframe>
+
+    <!-- Rechte Seite -->
+    <div>
+      <div class="card">
+        <h2>Video</h2>
+        <iframe width="100%" height="250" 
+          src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+          title="YouTube Video" 
+          frameborder="0" 
+          allowfullscreen></iframe>
+      </div>
     </div>
   </main>
 
-  <section class="cards">
-    <div class="card">
-      <h2>Über mich</h2>
-      <p>Hier kannst du ein paar Worte über dich schreiben – wer du bist, was du machst, und warum es deinen Blog gibt.</p>
-    </div>
-    <div class="card comments">
-      <h2>Kommentare</h2>
-      <form onsubmit="addComment(event)">
-        <textarea id="commentInput" placeholder="Schreibe einen Kommentar..."></textarea>
-        <button type="submit">Absenden</button>
-      </form>
-      <div class="comment-list" id="commentList"></div>
-    </div>
-  </section>
-  <section class="blog" id="blog">
-  <h2 style="padding:2rem 2rem 0;">Blogeinträge</h2>
-  <div id="blogList" style="padding:2rem;"></div>
-</section>
-
-
   <script>
+    // Login mit Passwort
     function login() {
       const pw = prompt("Bitte Passwort eingeben:");
       if (pw === "123") {
@@ -200,89 +145,85 @@
         alert("Falsches Passwort!");
       }
     }
-    function enterBlog() {
-      login();
-    }
+
+    // Kommentare
     function addComment(event) {
       event.preventDefault();
       const input = document.getElementById("commentInput");
       const text = input.value.trim();
-      if (text) {
-        const list = document.getElementById("commentList");
-        const newComment = document.createElement("div");
-        newComment.className = "comment";
-        newComment.textContent = text;
-        list.appendChild(newComment);
-        input.value = "";
-      }
+      if (!text) return;
+
+      const commentList = document.getElementById("commentList");
+      const div = document.createElement("div");
+      div.className = "comment";
+      div.textContent = text;
+      commentList.appendChild(div);
+
+      input.value = "";
     }
-    function toggleDarkmode() {
-      document.body.classList.toggle("dark");
+
+    // Blog laden
+    function loadBlog() {
+      const blogList = document.getElementById("blogList");
+      blogList.innerHTML = "";
+      const posts = JSON.parse(localStorage.getItem("blogPosts") || "[]");
+
+      posts.forEach((post, index) => {
+        const card = document.createElement("div");
+        card.className = "card";
+
+        const title = document.createElement("h3");
+        title.textContent = post.title;
+        title.style.cursor = "pointer";
+
+        const content = document.createElement("p");
+        content.textContent = post.text;
+        content.style.display = "none";
+
+        // Bewertungen
+        const rating = document.createElement("div");
+        rating.style.marginTop = "0.5rem";
+
+        const upBtn = document.createElement("button");
+        upBtn.textContent = `👍 ${post.up || 0}`;
+        upBtn.style.marginRight = "0.5rem";
+
+        const downBtn = document.createElement("button");
+        downBtn.textContent = `👎 ${post.down || 0}`;
+
+        upBtn.onclick = () => {
+          post.up = (post.up || 0) + 1;
+          savePosts(posts);
+          loadBlog();
+        };
+
+        downBtn.onclick = () => {
+          post.down = (post.down || 0) + 1;
+          savePosts(posts);
+          loadBlog();
+        };
+
+        rating.appendChild(upBtn);
+        rating.appendChild(downBtn);
+
+        // Titel-Click → Text ein-/ausblenden
+        title.onclick = () => {
+          content.style.display = content.style.display === "none" ? "block" : "none";
+        };
+
+        card.appendChild(title);
+        card.appendChild(content);
+        card.appendChild(rating);
+
+        blogList.appendChild(card);
+      });
     }
-    // Blogeinträge aus localStorage laden
-function loadBlog() {
-  const blogList = document.getElementById("blogList");
-  blogList.innerHTML = "";
-  const posts = JSON.parse(localStorage.getItem("blogPosts") || "[]");
 
-  posts.forEach((post, index) => {
-    const card = document.createElement("div");
-    card.className = "card";
-    card.style.marginBottom = "1rem";
+    function savePosts(posts) {
+      localStorage.setItem("blogPosts", JSON.stringify(posts));
+    }
 
-    const title = document.createElement("h3");
-    title.textContent = post.title;
-    title.style.cursor = "pointer";
-
-    const content = document.createElement("p");
-    content.textContent = post.text;
-    content.style.display = "none";
-
-    // Bewertungen
-    const rating = document.createElement("div");
-    rating.style.marginTop = "0.5rem";
-
-    const upBtn = document.createElement("button");
-    upBtn.textContent = `👍 ${post.up || 0}`;
-    upBtn.style.marginRight = "0.5rem";
-
-    const downBtn = document.createElement("button");
-    downBtn.textContent = `👎 ${post.down || 0}`;
-
-    upBtn.onclick = () => {
-      post.up = (post.up || 0) + 1;
-      savePosts(posts);
-      loadBlog();
-    };
-    downBtn.onclick = () => {
-      post.down = (post.down || 0) + 1;
-      savePosts(posts);
-      loadBlog();
-    };
-
-    rating.appendChild(upBtn);
-    rating.appendChild(downBtn);
-
-    // Titel-Click → Text ein-/ausblenden
-    title.onclick = () => {
-      content.style.display = content.style.display === "none" ? "block" : "none";
-    };
-
-    card.appendChild(title);
-    card.appendChild(content);
-    card.appendChild(rating);
-
-    blogList.appendChild(card);
-  });
-}
-
-function savePosts(posts) {
-  localStorage.setItem("blogPosts", JSON.stringify(posts));
-}
-
-// Beim Laden starten
-document.addEventListener("DOMContentLoaded", loadBlog);
-
+    document.addEventListener("DOMContentLoaded", loadBlog);
   </script>
 </body>
 </html>
