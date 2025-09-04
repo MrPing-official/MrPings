@@ -5,19 +5,32 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>haertfelder.me</title>
   <style>
+    :root {
+      --bg: #f9fafb;
+      --text: #111827;
+      --card-bg: white;
+      --accent: #2563eb;
+    }
+    body.dark {
+      --bg: #0f172a;
+      --text: #f9fafb;
+      --card-bg: #1e293b;
+    }
     body {
       font-family: system-ui, sans-serif;
       margin: 0;
-      background: #f9fafb;
-      color: #111827;
+      background: var(--bg);
+      color: var(--text);
+      transition: background 0.3s, color 0.3s;
     }
     header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 1rem 2rem;
-      background: white;
+      background: var(--card-bg);
       box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+      transition: background 0.3s;
     }
     header .logo {
       display: flex;
@@ -30,8 +43,12 @@
       width: 32px;
       height: 32px;
     }
+    header .actions {
+      display: flex;
+      gap: 0.5rem;
+    }
     header button {
-      background: #2563eb;
+      background: var(--accent);
       color: white;
       border: none;
       border-radius: 8px;
@@ -46,7 +63,7 @@
       padding: 2rem;
     }
     .welcome {
-      background: white;
+      background: var(--card-bg);
       padding: 2rem;
       border-radius: 12px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.08);
@@ -56,8 +73,8 @@
     }
     .welcome button {
       margin-top: 1rem;
-      background: #111827;
-      color: white;
+      background: var(--text);
+      color: var(--bg);
       border: none;
       padding: 0.7rem 1.2rem;
       border-radius: 8px;
@@ -84,7 +101,7 @@
       padding: 2rem;
     }
     .card {
-      background: white;
+      background: var(--card-bg);
       border-radius: 12px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.08);
       padding: 1.5rem;
@@ -92,7 +109,6 @@
     .card h2 {
       margin-top: 0;
     }
-    /* Kommentarbereich */
     .comments form {
       display: flex;
       flex-direction: column;
@@ -108,7 +124,7 @@
     }
     .comments button {
       align-self: flex-start;
-      background: #2563eb;
+      background: var(--accent);
       color: white;
       border: none;
       padding: 0.5rem 1rem;
@@ -120,20 +136,27 @@
     }
     .comment {
       background: #f3f4f6;
+      color: black;
       padding: 0.7rem;
       border-radius: 6px;
       margin-bottom: 0.5rem;
+    }
+    body.dark .comment {
+      background: #334155;
+      color: white;
     }
   </style>
 </head>
 <body>
   <header>
     <div class="logo">
-      <!-- Duck Icon -->
       <svg xmlns="http://www.w3.org/2000/svg" fill="yellow" viewBox="0 0 24 24"><path d="M12 2a6 6 0 0 0-6 6c0 2.2 1.2 4.1 3 5.2V15a4 4 0 0 0 8 0v-1.8c1.8-1.1 3-3 3-5.2a6 6 0 0 0-6-6z"/></svg>
       haertfelder.me
     </div>
-    <button onclick="login()">Anmelden</button>
+    <div class="actions">
+      <button onclick="toggleDarkmode()">🌙</button>
+      <button onclick="login()">Anmelden</button>
+    </div>
   </header>
 
   <main>
@@ -164,23 +187,17 @@
   </section>
 
   <script>
-    // Login mit Passwort (einfach, lokal)
     function login() {
       const pw = prompt("Bitte Passwort eingeben:");
       if (pw === "meinPasswort123") {
-        alert("Willkommen, Admin!");
-        // Hier könnte später das Schreib-Interface geladen werden
+        window.location.href = "admin.html";
       } else {
         alert("Falsches Passwort!");
       }
     }
-
-    // Blog-Button
     function enterBlog() {
       login();
     }
-
-    // Kommentare hinzufügen
     function addComment(event) {
       event.preventDefault();
       const input = document.getElementById("commentInput");
@@ -193,6 +210,9 @@
         list.appendChild(newComment);
         input.value = "";
       }
+    }
+    function toggleDarkmode() {
+      document.body.classList.toggle("dark");
     }
   </script>
 </body>
