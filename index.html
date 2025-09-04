@@ -87,6 +87,13 @@
     button:hover {
       background: #0056b3;
     }
+    .delete-btn {
+      background: #dc3545;
+      margin-top: 0.5rem;
+    }
+    .delete-btn:hover {
+      background: #a71d2a;
+    }
     /* Banner */
     .banner {
       background: linear-gradient(90deg, #007bff, #00d4ff);
@@ -145,11 +152,17 @@
   </main>
 
   <script>
+    // Adminstatus merken
+    let isAdmin = false;
+
     // Login mit Passwort
     function login() {
       const pw = prompt("Bitte Passwort eingeben:");
       if (pw === "123") {
-        window.location.href = "admin.html";
+        isAdmin = true;
+        localStorage.setItem("isAdmin", "true");
+        alert("Admin-Modus aktiviert!");
+        loadBlog();
       } else {
         alert("Falsches Passwort!");
       }
@@ -160,6 +173,7 @@
       const blogList = document.getElementById("blogList");
       blogList.innerHTML = "";
       const posts = JSON.parse(localStorage.getItem("blogPosts") || "[]");
+      isAdmin = localStorage.getItem("isAdmin") === "true";
 
       posts.forEach((post, index) => {
         const card = document.createElement("div");
@@ -240,6 +254,21 @@
             div.innerHTML = `<strong>${c.author}</strong>${c.text}`;
             commentList.appendChild(div);
           });
+        }
+
+        // 🔥 Admin: Löschen-Button
+        if (isAdmin) {
+          const deleteBtn = document.createElement("button");
+          deleteBtn.textContent = "🗑️ Löschen";
+          deleteBtn.className = "delete-btn";
+          deleteBtn.onclick = () => {
+            if (confirm("Diesen Blogeintrag wirklich löschen?")) {
+              posts.splice(index, 1);
+              savePosts(posts);
+              loadBlog();
+            }
+          };
+          card.appendChild(deleteBtn);
         }
 
         card.appendChild(title);
