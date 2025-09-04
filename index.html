@@ -49,7 +49,7 @@
       box-shadow: 0 2px 6px rgba(0,0,0,0.4);
       margin-bottom: 1.5rem;
     }
-    .comments textarea {
+    .comments input, .comments textarea {
       width: 100%;
       padding: 0.5rem;
       border-radius: 6px;
@@ -61,6 +61,10 @@
       padding: 0.5rem;
       border-radius: 6px;
       margin-bottom: 0.5rem;
+    }
+    .comment strong {
+      display: block;
+      margin-bottom: 0.2rem;
     }
     .blog h2 {
       margin-top: 2rem;
@@ -104,15 +108,6 @@
           <h2>Über mich</h2>
           <p>Hier kannst du ein paar Worte über dich schreiben – wer du bist, was du machst und was dich interessiert.</p>
         </div>
-
-        <div class="card comments">
-          <h2>Kommentare</h2>
-          <form onsubmit="addComment(event)">
-            <textarea id="commentInput" placeholder="Schreibe einen Kommentar..."></textarea>
-            <button type="submit">Absenden</button>
-          </form>
-          <div class="comment-list" id="commentList"></div>
-        </div>
       </section>
 
       <!-- Blogbereich -->
@@ -127,9 +122,10 @@
       <div class="card">
         <h2>Video</h2>
         <iframe width="100%" height="250" 
-          src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+          src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1" 
           title="YouTube Video" 
           frameborder="0" 
+          allow="autoplay; encrypted-media" 
           allowfullscreen></iframe>
       </div>
     </div>
@@ -146,22 +142,6 @@
       }
     }
 
-    // Kommentare
-    function addComment(event) {
-      event.preventDefault();
-      const input = document.getElementById("commentInput");
-      const text = input.value.trim();
-      if (!text) return;
-
-      const commentList = document.getElementById("commentList");
-      const div = document.createElement("div");
-      div.className = "comment";
-      div.textContent = text;
-      commentList.appendChild(div);
-
-      input.value = "";
-    }
-
     // Blog laden
     function loadBlog() {
       const blogList = document.getElementById("blogList");
@@ -174,7 +154,6 @@
 
         const title = document.createElement("h3");
         title.textContent = post.title;
-        title.style.cursor = "pointer";
 
         const content = document.createElement("p");
         content.textContent = post.text;
@@ -209,14 +188,71 @@
         // Titel-Click → Text ein-/ausblenden
         title.onclick = () => {
           content.style.display = content.style.display === "none" ? "block" : "none";
+          commentSection.style.display = content.style.display;
         };
+
+        // Kommentarbereich pro Post
+        const commentSection = document.createElement("div");
+        commentSection.className = "card comments";
+        commentSection.style.display = "none";
+
+        const commentForm = document.createElement("form");
+        commentForm.onsubmit = (e) => addComment(e, index);
+
+        const authorInput = document.createElement("input");
+        authorInput.placeholder = "Name";
+
+        const commentInput = document.createElement("textarea");
+        commentInput.placeholder = "Kommentar schreiben...";
+
+        const submitBtn = document.createElement("button");
+        submitBtn.type = "submit";
+        submitBtn.textContent = "Absenden";
+
+        commentForm.appendChild(authorInput);
+        commentForm.appendChild(commentInput);
+        commentForm.appendChild(submitBtn);
+
+        const commentList = document.createElement("div");
+        commentList.className = "comment-list";
+
+        commentSection.appendChild(commentForm);
+        commentSection.appendChild(commentList);
+
+        // Kommentare laden
+        if (post.comments) {
+          post.comments.forEach(c => {
+            const div = document.createElement("div");
+            div.className = "comment";
+            div.innerHTML = `<strong>${c.author}</strong>${c.text}`;
+            commentList.appendChild(div);
+          });
+        }
 
         card.appendChild(title);
         card.appendChild(content);
         card.appendChild(rating);
-
+        card.appendChild(commentSection);
         blogList.appendChild(card);
       });
+    }
+
+    function addComment(event, postIndex) {
+      event.preventDefault();
+      const form = event.target;
+      const author = form.querySelector("input").value.trim();
+      const text = form.querySelector("textarea").value.trim();
+      if (!author) {
+        alert("Bitte Name eingeben!");
+        return;
+      }
+      if (!text) return;
+
+      const posts = JSON.parse(localStorage.getItem("blogPosts") || "[]");
+      posts[postIndex].comments = posts[postIndex].comments || [];
+      posts[postIndex].comments.push({ author, text });
+      localStorage.setItem("blogPosts", JSON.stringify(posts));
+      loadBlog();
     }
 
     function savePosts(posts) {
