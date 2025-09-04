@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin – haertfelder.me</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      margin: 0;
+      background: #f9fafb;
+      color: #111827;
+    }
+    header {
+      padding: 1rem 2rem;
+      background: white;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+      font-weight: bold;
+    }
+    .container {
+      padding: 2rem;
+    }
+    .entry {
+      background: white;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+    .entry input {
+      width: 100%;
+      padding: 0.5rem;
+      margin-bottom: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+    .entry textarea {
+      width: 100%;
+      min-height: 100px;
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+    #addEntry {
+      background: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 0.7rem 1.2rem;
+      cursor: pointer;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <header>📝 Adminbereich – Blogeinträge erstellen</header>
+  <div class="container" id="entries">
+    <div class="entry">
+      <input type="text" placeholder="Titel eingeben">
+      <textarea placeholder="Text eingeben"></textarea>
+    </div>
+  </div>
+  <div class="container">
+    <button id="addEntry">+ Neuer Eintrag</button>
+  </div>
+
+  <script>
+    document.getElementById("addEntry").addEventListener("click", () => {
+      const container = document.getElementById("entries");
+      const div = document.createElement("div");
+      div.className = "entry";
+      div.innerHTML = `
+        <input type="text" placeholder="Titel eingeben">
+        <textarea placeholder="Text eingeben"></textarea>
+      `;
+      container.appendChild(div);
+    });
+  </script>
+</body>
+</html>
