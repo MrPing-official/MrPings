@@ -2,81 +2,127 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin – haertfelder.me</title>
+  <title>Admin – Blogverwaltung</title>
   <style>
     body {
       font-family: system-ui, sans-serif;
+      background: #121212;
+      color: #fff;
       margin: 0;
-      background: #f9fafb;
-      color: #111827;
-    }
-    header {
-      padding: 1rem 2rem;
-      background: white;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-      font-weight: bold;
-    }
-    .container {
       padding: 2rem;
     }
-    .entry {
-      background: white;
-      padding: 1rem;
+    h1 {
       margin-bottom: 1rem;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
+    }
+    .entry {
+      background: #1e1e1e;
+      padding: 1rem;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    }
+    .entry input, .entry textarea {
+      width: 100%;
+      padding: 0.5rem;
+      margin-top: 0.5rem;
+      margin-bottom: 0.5rem;
+      border-radius: 6px;
+      border: none;
+      outline: none;
     }
     .entry input {
-      width: 100%;
-      padding: 0.5rem;
-      margin-bottom: 0.5rem;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 1rem;
+      font-size: 1.1rem;
+      font-weight: bold;
     }
     .entry textarea {
-      width: 100%;
-      min-height: 100px;
-      padding: 0.5rem;
-      border: 1px solid #ccc;
+      min-height: 120px;
+      resize: vertical;
+    }
+    button {
+      background: #007bff;
+      color: white;
+      padding: 0.6rem 1rem;
+      border: none;
       border-radius: 6px;
-      font-size: 1rem;
+      cursor: pointer;
+      margin-right: 0.5rem;
+    }
+    button:hover {
+      background: #0056b3;
     }
     #addEntry {
-      background: #2563eb;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      padding: 0.7rem 1.2rem;
-      cursor: pointer;
-      margin-top: 1rem;
+      background: #28a745;
+    }
+    #addEntry:hover {
+      background: #1e7e34;
     }
   </style>
 </head>
 <body>
-  <header>📝 Adminbereich – Blogeinträge erstellen</header>
-  <div class="container" id="entries">
-    <div class="entry">
-      <input type="text" placeholder="Titel eingeben">
-      <textarea placeholder="Text eingeben"></textarea>
-    </div>
-  </div>
   <div class="container">
+    <h1>Blogverwaltung</h1>
+    <p>Hier kannst du neue Einträge erstellen und speichern. Die Einträge erscheinen auf deiner Startseite.</p>
+
+    <div id="entries"></div>
+
     <button id="addEntry">+ Neuer Eintrag</button>
+    <button id="saveEntries">💾 Speichern</button>
   </div>
 
   <script>
-    document.getElementById("addEntry").addEventListener("click", () => {
-      const container = document.getElementById("entries");
+    const entriesDiv = document.getElementById("entries");
+
+    function createEntry(title = "", text = "") {
       const div = document.createElement("div");
       div.className = "entry";
-      div.innerHTML = `
-        <input type="text" placeholder="Titel eingeben">
-        <textarea placeholder="Text eingeben"></textarea>
-      `;
-      container.appendChild(div);
+
+      const input = document.createElement("input");
+      input.type = "text";
+      input.placeholder = "Titel";
+      input.value = title;
+
+      const textarea = document.createElement("textarea");
+      textarea.placeholder = "Dein Text...";
+      textarea.value = text;
+
+      div.appendChild(input);
+      div.appendChild(textarea);
+      entriesDiv.appendChild(div);
+    }
+
+    // Bestehende Posts laden
+    function loadEntries() {
+      const posts = JSON.parse(localStorage.getItem("blogPosts") || "[]");
+      posts.forEach(post => createEntry(post.title, post.text));
+    }
+
+    // Speichern
+    document.getElementById("saveEntries").addEventListener("click", () => {
+      const entries = document.querySelectorAll(".entry");
+      const posts = [];
+      entries.forEach(entry => {
+        const title = entry.querySelector("input").value.trim();
+        const text = entry.querySelector("textarea").value.trim();
+        if (title && text) {
+          posts.push({ title, text, up: 0, down: 0 });
+        }
+      });
+      localStorage.setItem("blogPosts", JSON.stringify(posts));
+      alert("Blogeinträge gespeichert!");
     });
+
+    // Neuen Eintrag hinzufügen
+    document.getElementById("addEntry").addEventListener("click", () => {
+      createEntry();
+    });
+
+    // Beim Laden bestehende Einträge anzeigen
+    loadEntries();
   </script>
 </body>
 </html>
+
