@@ -116,7 +116,9 @@
 
       <div class="card">
         <h2>Über mich</h2>
-        <p>Jung, ideenreich, Elektromeister, Spaßvogel.</p>
+        <p>Ich bin jung, ideenreich und arbeite als Elektromeister. 
+           Neben meinem Beruf bin ich ein echter Spaßvogel und immer auf der Suche nach neuen 
+           Herausforderungen und kreativen Projekten.</p>
       </div>
 
       <!-- Blogbereich -->
@@ -193,7 +195,7 @@
 
         // Kommentarliste
         const commentList = document.createElement("div");
-        commentList.id = `commentList-${index}`;
+        commentList.id = \`commentList-\${index}\`;
         (post.comments || []).forEach(c => {
           const div = document.createElement("div");
           div.className = "comment";
@@ -205,10 +207,10 @@
         const rating = document.createElement("div");
         rating.style.marginTop = "0.5rem";
         const upBtn = document.createElement("button");
-        upBtn.textContent = `👍 ${post.up || 0}`;
+        upBtn.textContent = \`👍 \${post.up || 0}\`;
         upBtn.style.marginRight = "0.5rem";
         const downBtn = document.createElement("button");
-        downBtn.textContent = `👎 ${post.down || 0}`;
+        downBtn.textContent = \`👎 \${post.down || 0}\`;
 
         upBtn.onclick = () => ratePost(index, "up");
         downBtn.onclick = () => ratePost(index, "down");
@@ -229,8 +231,8 @@
     function addComment(e, postIndex) {
       e.preventDefault();
       const posts = JSON.parse(localStorage.getItem("blogPosts") || "[]");
-      const name = document.getElementById(`name-${postIndex}`).value.trim();
-      const text = document.getElementById(`comment-${postIndex}`).value.trim();
+      const name = document.getElementById(\`name-\${postIndex}\`).value.trim();
+      const text = document.getElementById(\`comment-\${postIndex}\`).value.trim();
 
       if (!name || !text) return;
 
