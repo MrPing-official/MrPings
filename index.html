@@ -110,4 +110,180 @@
     <div>
       <div class="card">
         <h2>Willkommen!</h2>
-        <p>Diese Seite ist
+        <p>Diese Seite ist hauptsächlcih für mich um meine Gedanken und Ideen jederzeit festzulegen, 
+           um den Überschuss an Ideen aus meinem Kopf zu reduzieren und Platz für neue zu haben :)</p>
+      </div>
+
+      <div class="card">
+        <h2>Über mich</h2>
+        <p>Jung, ideenreich, Elektromeister, Spaßvogel.</p>
+      </div>
+
+      <!-- Blogbereich -->
+      <section class="blog" id="blog">
+        <div class="banner">💡 Ideenschmiede</div>
+        <h2>Blogeinträge</h2>
+        <div id="blogList"></div>
+      </section>
+    </div>
+
+    <!-- Rechte Seite -->
+    <div>
+      <div class="card">
+        <h2>Video</h2>
+        <iframe width="100%" height="250" 
+          src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=1" 
+          title="YouTube Video" 
+          frameborder="0" 
+          allow="autoplay; encrypted-media" 
+          allowfullscreen></iframe>
+      </div>
+    </div>
+  </main>
+
+  <div class="visitor-counter" id="visitorCounter">Besucher: 0</div>
+
+  <script>
+    // Darkmode
+    function toggleDarkMode() {
+      document.body.classList.toggle("dark");
+    }
+
+    // Login
+    function login() {
+      const pw = prompt("Bitte Passwort eingeben:");
+      if (pw === "123") {
+        sessionStorage.setItem("isAdmin", "true");
+        window.location.href = "admin.html";
+      } else {
+        alert("Falsches Passwort!");
+      }
+    }
+
+    // Blog laden
+    function loadBlog() {
+      const blogList = document.getElementById("blogList");
+      blogList.innerHTML = "";
+      const posts = JSON.parse(localStorage.getItem("blogPosts") || "[]");
+
+      posts.forEach((post, index) => {
+        const card = document.createElement("div");
+        card.className = "card";
+
+        const title = document.createElement("h3");
+        title.textContent = post.title;
+        title.style.cursor = "pointer";
+
+        const content = document.createElement("p");
+        content.textContent = post.text;
+        content.style.display = "none";
+
+        title.onclick = () => {
+          content.style.display = content.style.display === "none" ? "block" : "none";
+        };
+
+        // Kommentarformular
+        const commentForm = document.createElement("form");
+        commentForm.onsubmit = (e) => addComment(e, index);
+        commentForm.innerHTML = `
+          <input type="text" id="name-${index}" placeholder="Dein Name" required>
+          <textarea id="comment-${index}" placeholder="Kommentar..." required></textarea>
+          <button type="submit">Kommentieren</button>
+        `;
+
+        // Kommentarliste
+        const commentList = document.createElement("div");
+        commentList.id = `commentList-${index}`;
+        (post.comments || []).forEach(c => {
+          const div = document.createElement("div");
+          div.className = "comment";
+          div.textContent = c.name + ": " + c.text;
+          commentList.appendChild(div);
+        });
+
+        // Bewertung
+        const rating = document.createElement("div");
+        rating.style.marginTop = "0.5rem";
+        const upBtn = document.createElement("button");
+        upBtn.textContent = `👍 ${post.up || 0}`;
+        upBtn.style.marginRight = "0.5rem";
+        const downBtn = document.createElement("button");
+        downBtn.textContent = `👎 ${post.down || 0}`;
+
+        upBtn.onclick = () => ratePost(index, "up");
+        downBtn.onclick = () => ratePost(index, "down");
+
+        rating.appendChild(upBtn);
+        rating.appendChild(downBtn);
+
+        card.appendChild(title);
+        card.appendChild(content);
+        card.appendChild(commentForm);
+        card.appendChild(commentList);
+        card.appendChild(rating);
+
+        blogList.appendChild(card);
+      });
+    }
+
+    function addComment(e, postIndex) {
+      e.preventDefault();
+      const posts = JSON.parse(localStorage.getItem("blogPosts") || "[]");
+      const name = document.getElementById(`name-${postIndex}`).value.trim();
+      const text = document.getElementById(`comment-${postIndex}`).value.trim();
+
+      if (!name || !text) return;
+
+      posts[postIndex].comments = posts[postIndex].comments || [];
+      posts[postIndex].comments.push({ name, text });
+      posts[postIndex].rated = posts[postIndex].rated || {};
+      savePosts(posts);
+      loadBlog();
+    }
+
+    function ratePost(postIndex, type) {
+      const posts = JSON.parse(localStorage.getItem("blogPosts") || "[]");
+      const name = prompt("Bitte gib deinen Namen ein, um abzustimmen:");
+
+      if (!name) return;
+      posts[postIndex].comments = posts[postIndex].comments || [];
+      const hasComment = posts[postIndex].comments.some(c => c.name === name);
+
+      if (!hasComment) {
+        alert("Du musst zuerst einen Kommentar verfassen, um abzustimmen.");
+        return;
+      }
+
+      posts[postIndex].rated = posts[postIndex].rated || {};
+      if (posts[postIndex].rated[name]) {
+        alert("Du hast bereits abgestimmt!");
+        return;
+      }
+
+      if (type === "up") posts[postIndex].up = (posts[postIndex].up || 0) + 1;
+      if (type === "down") posts[postIndex].down = (posts[postIndex].down || 0) + 1;
+      posts[postIndex].rated[name] = true;
+
+      savePosts(posts);
+      loadBlog();
+    }
+
+    function savePosts(posts) {
+      localStorage.setItem("blogPosts", JSON.stringify(posts));
+    }
+
+    // Besucherzähler
+    function updateVisitorCounter() {
+      let count = localStorage.getItem("visitorCount") || 0;
+      count++;
+      localStorage.setItem("visitorCount", count);
+      document.getElementById("visitorCounter").textContent = "Besucher: " + count;
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      loadBlog();
+      updateVisitorCounter();
+    });
+  </script>
+</body>
+</html>
