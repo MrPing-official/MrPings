@@ -79,7 +79,7 @@
       if (!title || !text) return;
 
       const posts = JSON.parse(localStorage.getItem("blogPosts") || "[]");
-      posts.push({ title, text, up: 0, down: 0 });
+      posts.push({ title, text, up: 0, down: 0, comments: [], rated: {} });
       savePosts(posts);
 
       document.getElementById("postTitle").value = "";
