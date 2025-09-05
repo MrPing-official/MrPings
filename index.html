@@ -150,13 +150,13 @@
     function login() {
       const pw = prompt("Bitte Passwort eingeben:");
       if (pw === "123") {
+        sessionStorage.setItem("isAdmin", "true");
         window.location.href = "admin.html";
       } else {
         alert("Falsches Passwort!");
       }
     }
 
-    // Blog laden
     function loadBlog() {
       const blogList = document.getElementById("blogList");
       blogList.innerHTML = "";
@@ -178,7 +178,6 @@
           content.style.display = content.style.display === "none" ? "block" : "none";
         };
 
-        // Bewertungen
         const rating = document.createElement("div");
         rating.style.marginTop = "0.5rem";
 
