@@ -11,15 +11,18 @@
       color: #222;
       padding: 2rem;
     }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
     .card {
       background: #fff;
       border-radius: 12px;
       padding: 1.5rem;
       box-shadow: 0 2px 6px rgba(0,0,0,0.2);
       margin-bottom: 1.5rem;
-    }
-    h1 {
-      margin-bottom: 1rem;
     }
     input, textarea {
       width: 100%;
@@ -42,7 +45,10 @@
   </style>
 </head>
 <body>
-  <h1>Adminbereich</h1>
+  <header>
+    <h1>Adminbereich</h1>
+    <button onclick="logout()">🚪 Logout</button>
+  </header>
 
   <div class="card">
     <h2>Neuen Blogeintrag erstellen</h2>
@@ -59,6 +65,12 @@
   </div>
 
   <script>
+    // Admin-Schutz
+    if (sessionStorage.getItem("isAdmin") !== "true") {
+      alert("Kein Zugriff! Bitte zuerst anmelden.");
+      window.location.href = "index.html";
+    }
+
     function addPost(event) {
       event.preventDefault();
       const title = document.getElementById("postTitle").value.trim();
@@ -111,6 +123,11 @@
 
     function savePosts(posts) {
       localStorage.setItem("blogPosts", JSON.stringify(posts));
+    }
+
+    function logout() {
+      sessionStorage.removeItem("isAdmin");
+      window.location.href = "index.html";
     }
 
     document.addEventListener("DOMContentLoaded", loadBlog);
