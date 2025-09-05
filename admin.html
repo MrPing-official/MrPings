@@ -2,45 +2,31 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>Admin – Blogverwaltung</title>
+  <title>Adminbereich - haertfelder.me</title>
   <style>
     body {
       font-family: system-ui, sans-serif;
-      background: #121212;
-      color: #fff;
       margin: 0;
+      background: #f4f4f9;
+      color: #222;
       padding: 2rem;
+    }
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      margin-bottom: 1.5rem;
     }
     h1 {
       margin-bottom: 1rem;
     }
-    .container {
-      max-width: 800px;
-      margin: auto;
-    }
-    .entry {
-      background: #1e1e1e;
-      padding: 1rem;
-      border-radius: 10px;
-      margin-bottom: 1rem;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
-    }
-    .entry input, .entry textarea {
+    input, textarea {
       width: 100%;
-      padding: 0.5rem;
-      margin-top: 0.5rem;
       margin-bottom: 0.5rem;
+      padding: 0.5rem;
       border-radius: 6px;
-      border: none;
-      outline: none;
-    }
-    .entry input {
-      font-size: 1.1rem;
-      font-weight: bold;
-    }
-    .entry textarea {
-      min-height: 120px;
-      resize: vertical;
+      border: 1px solid #ccc;
     }
     button {
       background: #007bff;
@@ -49,80 +35,85 @@
       border: none;
       border-radius: 6px;
       cursor: pointer;
-      margin-right: 0.5rem;
     }
     button:hover {
       background: #0056b3;
     }
-    #addEntry {
-      background: #28a745;
-    }
-    #addEntry:hover {
-      background: #1e7e34;
-    }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Blogverwaltung</h1>
-    <p>Hier kannst du neue Einträge erstellen und speichern. Die Einträge erscheinen auf deiner Startseite.</p>
+  <h1>Adminbereich</h1>
 
-    <div id="entries"></div>
+  <div class="card">
+    <h2>Neuen Blogeintrag erstellen</h2>
+    <form onsubmit="addPost(event)">
+      <input type="text" id="postTitle" placeholder="Titel" required>
+      <textarea id="postText" placeholder="Dein Text..." required></textarea>
+      <button type="submit">➕ Erstellen</button>
+    </form>
+  </div>
 
-    <button id="addEntry">+ Neuer Eintrag</button>
-    <button id="saveEntries">💾 Speichern</button>
+  <div class="card">
+    <h2>Alle Blogeinträge</h2>
+    <div id="blogList"></div>
   </div>
 
   <script>
-    const entriesDiv = document.getElementById("entries");
+    function addPost(event) {
+      event.preventDefault();
+      const title = document.getElementById("postTitle").value.trim();
+      const text = document.getElementById("postText").value.trim();
 
-    function createEntry(title = "", text = "") {
-      const div = document.createElement("div");
-      div.className = "entry";
+      if (!title || !text) return;
 
-      const input = document.createElement("input");
-      input.type = "text";
-      input.placeholder = "Titel";
-      input.value = title;
-
-      const textarea = document.createElement("textarea");
-      textarea.placeholder = "Dein Text...";
-      textarea.value = text;
-
-      div.appendChild(input);
-      div.appendChild(textarea);
-      entriesDiv.appendChild(div);
-    }
-
-    // Bestehende Posts laden
-    function loadEntries() {
       const posts = JSON.parse(localStorage.getItem("blogPosts") || "[]");
-      posts.forEach(post => createEntry(post.title, post.text));
+      posts.push({ title, text, up: 0, down: 0 });
+      savePosts(posts);
+
+      document.getElementById("postTitle").value = "";
+      document.getElementById("postText").value = "";
+
+      loadBlog();
     }
 
-    // Speichern
-    document.getElementById("saveEntries").addEventListener("click", () => {
-      const entries = document.querySelectorAll(".entry");
-      const posts = [];
-      entries.forEach(entry => {
-        const title = entry.querySelector("input").value.trim();
-        const text = entry.querySelector("textarea").value.trim();
-        if (title && text) {
-          posts.push({ title, text, up: 0, down: 0 });
-        }
+    function loadBlog() {
+      const blogList = document.getElementById("blogList");
+      blogList.innerHTML = "";
+      const posts = JSON.parse(localStorage.getItem("blogPosts") || "[]");
+
+      posts.forEach((post, index) => {
+        const div = document.createElement("div");
+        div.style.borderBottom = "1px solid #ddd";
+        div.style.padding = "0.5rem 0";
+
+        const strong = document.createElement("strong");
+        strong.textContent = post.title;
+
+        const p = document.createElement("p");
+        p.textContent = post.text;
+
+        const delBtn = document.createElement("button");
+        delBtn.textContent = "🗑️ Löschen";
+        delBtn.onclick = () => {
+          if (confirm("Diesen Blogeintrag wirklich löschen?")) {
+            posts.splice(index, 1);
+            savePosts(posts);
+            loadBlog();
+          }
+        };
+
+        div.appendChild(strong);
+        div.appendChild(p);
+        div.appendChild(delBtn);
+        blogList.appendChild(div);
       });
+    }
+
+    function savePosts(posts) {
       localStorage.setItem("blogPosts", JSON.stringify(posts));
-      alert("Blogeinträge gespeichert!");
-    });
+    }
 
-    // Neuen Eintrag hinzufügen
-    document.getElementById("addEntry").addEventListener("click", () => {
-      createEntry();
-    });
-
-    // Beim Laden bestehende Einträge anzeigen
-    loadEntries();
+    document.addEventListener("DOMContentLoaded", loadBlog);
   </script>
 </body>
 </html>
-
