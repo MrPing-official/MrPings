@@ -130,34 +130,27 @@
   <header>
     <h1>💡 haertfelder.me</h1>
     <div class="header-buttons">
-      <button onclick="toggleDarkMode()">🌙</button>
-      <button onclick="openLogin()">🦆</button>
+      <button id="darkModeBtn">🌙</button>
+      <button id="loginBtn">🦆</button>
     </div>
   </header>
 
   <main>
-    <!-- Linke Seite -->
     <div>
       <div class="card">
         <h2>Willkommen!</h2>
-        <p>Diese Seite ist hauptsächlcih für mich um meine Gedanken und Ideen jederzeit festzulegen, 
-           um den Überschuss an Ideen aus meinem Kopf zu reduzieren und Platz für neue zu haben :)</p>
+        <p>Diese Seite ist hauptsächlich für mich, um meine Gedanken und Ideen jederzeit festzuhalten.</p>
       </div>
-
       <div class="card">
         <h2>Über mich</h2>
         <p>Jung, ideenreich, Elektromeister, Spaßvogel.</p>
       </div>
-
-      <!-- Blogbereich -->
       <section class="blog" id="blog">
         <div class="banner">💡 Ideenschmiede</div>
         <h2>Blogeinträge</h2>
         <div id="blogList"></div>
       </section>
     </div>
-
-    <!-- Rechte Seite -->
     <div>
       <div class="card">
         <h2>Video</h2>
@@ -179,26 +172,22 @@
       <h2>🔑 Admin Login</h2>
       <input type="password" id="adminPw" placeholder="Passwort">
       <br>
-      <button onclick="login()">Login</button>
-      <button onclick="closeLogin()">Abbrechen</button>
+      <button id="loginSubmitBtn">Login</button>
+      <button id="loginCancelBtn">Abbrechen</button>
     </div>
   </div>
 
   <script>
-    // Darkmode
+    // Funktionen
     function toggleDarkMode() {
       document.body.classList.toggle("dark");
     }
-
-    // Login Modal öffnen/schließen
     function openLogin() {
       document.getElementById("loginModal").style.display = "flex";
     }
     function closeLogin() {
       document.getElementById("loginModal").style.display = "none";
     }
-
-    // Admin Login
     function login() {
       const pw = document.getElementById("adminPw").value;
       if (pw === "123") {
@@ -207,6 +196,14 @@
       } else {
         alert("Falsches Passwort!");
       }
+    }
+
+    // Besucherzähler
+    function updateVisitorCounter() {
+      let count = localStorage.getItem("visitorCount") || 0;
+      count++;
+      localStorage.setItem("visitorCount", count);
+      document.getElementById("visitorCounter").textContent = "Besucher: " + count;
     }
 
     // Blog laden
@@ -242,7 +239,7 @@
 
         // Kommentarliste
         const commentList = document.createElement("div");
-        commentList.id = \`commentList-\${index}\`;
+        commentList.id = \`commentList-${index}\`;
         (post.comments || []).forEach(c => {
           const div = document.createElement("div");
           div.className = "comment";
@@ -278,8 +275,8 @@
     function addComment(e, postIndex) {
       e.preventDefault();
       const posts = JSON.parse(localStorage.getItem("blogPosts") || "[]");
-      const name = document.getElementById(\`name-\${postIndex}\`).value.trim();
-      const text = document.getElementById(\`comment-\${postIndex}\`).value.trim();
+      const name = document.getElementById(\`name-${postIndex}\`).value.trim();
+      const text = document.getElementById(\`comment-${postIndex}\`).value.trim();
 
       if (!name || !text) return;
 
@@ -321,15 +318,13 @@
       localStorage.setItem("blogPosts", JSON.stringify(posts));
     }
 
-    // Besucherzähler
-    function updateVisitorCounter() {
-      let count = localStorage.getItem("visitorCount") || 0;
-      count++;
-      localStorage.setItem("visitorCount", count);
-      document.getElementById("visitorCounter").textContent = "Besucher: " + count;
-    }
-
+    // EventListener nach DOMContentLoaded
     document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("darkModeBtn").addEventListener("click", toggleDarkMode);
+      document.getElementById("loginBtn").addEventListener("click", openLogin);
+      document.getElementById("loginCancelBtn").addEventListener("click", closeLogin);
+      document.getElementById("loginSubmitBtn").addEventListener("click", login);
+
       loadBlog();
       updateVisitorCounter();
     });
