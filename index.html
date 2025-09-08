@@ -2,54 +2,147 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>Testseite Buttons</title>
+  <title>haertfelder.me</title>
   <style>
+    :root {
+      --bg-color: #f4f4f9;
+      --text-color: #222;
+      --card-bg: #ffffff;
+      --header-bg: #1e1e1e;
+      --header-text: #fff;
+    }
     body.dark {
-      background: #121212;
-      color: #fff;
+      --bg-color: #121212;
+      --text-color: #fff;
+      --card-bg: #1e1e1e;
+      --header-bg: #000;
+      --header-text: #fff;
     }
     body {
-      background: #f4f4f9;
-      color: #222;
-      font-family: sans-serif;
+      font-family: system-ui, sans-serif;
       margin: 0;
-      padding: 2rem;
+      background: var(--bg-color);
+      color: var(--text-color);
+      transition: background 0.3s, color 0.3s;
     }
     header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: #333;
-      color: #fff;
-      padding: 1rem;
+      padding: 1rem 2rem;
+      background: var(--header-bg);
+      color: var(--header-text);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
     }
-    button {
+    header h1 {
+      font-size: 1.6rem;
+      font-weight: bold;
+      text-shadow: 0 0 8px #00d4ff, 0 0 12px #007bff;
+    }
+    .header-buttons {
+      display: flex;
+      gap: 0.5rem;
+    }
+    header button {
       background: transparent;
-      font-size: 2rem;
+      font-size: 1.8rem;
       border: none;
+      cursor: pointer;
+    }
+    main {
+      padding: 2rem;
+    }
+    .card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      margin-bottom: 1.5rem;
+    }
+    /* Login Modal */
+    #loginModal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      justify-content: center;
+      align-items: center;
+    }
+    #loginBox {
+      background: var(--card-bg);
+      color: var(--text-color);
+      padding: 2rem;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    }
+    #loginBox input {
+      padding: 0.5rem;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      margin-bottom: 1rem;
+      width: 100%;
+    }
+    #loginBox button {
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 6px;
+      background: #007bff;
+      color: white;
       cursor: pointer;
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>Button-Test</h1>
-    <div>
+    <h1>💡 haertfelder.me</h1>
+    <div class="header-buttons">
       <button onclick="toggleDarkMode()">🌙</button>
-      <button onclick="login()">🦆</button>
+      <button onclick="openLogin()">🦆</button>
     </div>
   </header>
 
-  <p>Testseite für Darkmode- und Login-Button.</p>
+  <main>
+    <div class="card">
+      <h2>Willkommen!</h2>
+      <p>Diese Seite ist hauptsächlcih für mich, um meine Gedanken und Ideen jederzeit festzulegen,
+         um den Überschuss an Ideen aus meinem Kopf zu reduzieren und Platz für neue zu haben :)</p>
+    </div>
+
+    <div class="card">
+      <h2>Über mich</h2>
+      <p>Jung, ideenreich, Elektromeister, Spaßvogel.</p>
+    </div>
+  </main>
+
+  <!-- Login Modal -->
+  <div id="loginModal">
+    <div id="loginBox">
+      <h2>🔑 Admin Login</h2>
+      <input type="password" id="adminPw" placeholder="Passwort">
+      <br>
+      <button onclick="login()">Login</button>
+      <button onclick="closeLogin()">Abbrechen</button>
+    </div>
+  </div>
 
   <script>
+    // Darkmode
     function toggleDarkMode() {
       document.body.classList.toggle("dark");
-      console.log("Darkmode umgeschaltet");
     }
 
+    // Login Modal öffnen/schließen
+    function openLogin() {
+      document.getElementById("loginModal").style.display = "flex";
+    }
+    function closeLogin() {
+      document.getElementById("loginModal").style.display = "none";
+    }
+
+    // Admin Login
     function login() {
-      const pw = prompt("Bitte Passwort eingeben:");
+      const pw = document.getElementById("adminPw").value;
       if (pw === "123") {
         sessionStorage.setItem("isAdmin", "true");
         window.location.href = "admin.html";
