@@ -131,11 +131,16 @@ form button { padding:0.4rem 0.8rem; border-radius:6px; border:none; background:
 
 /* RESPONSIVE */
 @media (max-width: 900px){
-  main { grid-template-columns:1fr; padding:1rem; }
+  main {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+  }
+  .right-column { order:-1; margin-bottom:1rem; } /* Video oben */
+  iframe { height:200px; }
   header { flex-direction: column; gap:0.5rem; text-align:center; }
   .header-buttons { justify-content: center; }
-  iframe { height:200px; }
-  .right-column { order:-1; } /* Video oben */
 }
 @media (max-width: 500px){
   header h1 { font-size:1.3rem; }
