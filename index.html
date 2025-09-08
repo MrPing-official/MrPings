@@ -41,102 +41,36 @@ header h1 {
   text-shadow: 0 0 8px #00d4ff, 0 0 12px #007bff;
 }
 .header-buttons { display:flex; gap:0.5rem; }
-header button {
-  background:transparent;
-  font-size:1.8rem;
-  border:none;
-  cursor:pointer;
-}
+header button { background:transparent; font-size:1.8rem; border:none; cursor:pointer; }
 main {
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 2rem;
   padding: 2rem;
 }
-.card {
-  background: var(--card-bg);
-  border-radius: 12px;
-  padding: 1.5rem;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-  margin-bottom: 1.5rem;
-  transition: transform 0.2s;
-}
+.card { background: var(--card-bg); border-radius:12px; padding:1.5rem; box-shadow:0 2px 6px rgba(0,0,0,0.2); margin-bottom:1.5rem; transition: transform 0.2s; }
 .card:hover { transform: translateY(-3px); }
-.banner {
-  background: linear-gradient(90deg,#007bff,#00d4ff);
-  color: #fff;
-  font-size:1.3rem;
-  font-weight:bold;
-  text-align:center;
-  padding:0.8rem;
-  border-radius:12px;
-  margin-bottom:1rem;
-}
-.comment {
-  background:#2a2a2a;
-  color:#fff;
-  padding:0.4rem;
-  border-radius:6px;
-  margin-bottom:0.5rem;
-  opacity:0;
-  transform:translateY(10px);
-  transition:opacity 0.3s ease, transform 0.3s ease;
-}
-.comment.show {
-  opacity:1;
-  transform:translateY(0);
-}
-.visitor-counter {
-  position:fixed;
-  bottom:10px;
-  right:10px;
-  background:var(--card-bg);
-  color:var(--text-color);
-  padding:0.5rem 1rem;
-  border-radius:8px;
-  box-shadow:0 2px 6px rgba(0,0,0,0.2);
-  font-size:0.9rem;
-}
+.banner { background: linear-gradient(90deg,#007bff,#00d4ff); color:#fff; font-size:1.3rem; font-weight:bold; text-align:center; padding:0.8rem; border-radius:12px; margin-bottom:1rem; }
+.comment { background:#2a2a2a; color:#fff; padding:0.4rem; border-radius:6px; margin-bottom:0.5rem; opacity:0; transform:translateY(10px); transition:opacity 0.3s ease, transform 0.3s ease; }
+.comment.show { opacity:1; transform:translateY(0); }
+.visitor-counter { position:fixed; bottom:10px; right:10px; background:var(--card-bg); color:var(--text-color); padding:0.5rem 1rem; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.2); font-size:0.9rem; }
 /* Login Modal */
-#loginModal {
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.7);
-  justify-content:center;
-  align-items:center;
-  opacity:0;
-  transition:opacity 0.3s ease;
-}
+#loginModal { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); justify-content:center; align-items:center; opacity:0; transition:opacity 0.3s ease; }
 #loginModal.show { display:flex; opacity:1; }
-#loginBox {
-  background:var(--card-bg);
-  color:var(--text-color);
-  padding:2rem;
-  border-radius:10px;
-  text-align:center;
-  box-shadow:0 4px 10px rgba(0,0,0,0.4);
-  width:300px;
-  transform:scale(0.8);
-  transition:transform 0.3s ease;
-}
+#loginBox { background:var(--card-bg); color:var(--text-color); padding:2rem; border-radius:10px; text-align:center; box-shadow:0 4px 10px rgba(0,0,0,0.4); width:300px; transform:scale(0.8); transition:transform 0.3s ease; }
 #loginModal.show #loginBox { transform:scale(1); }
 #loginBox input { padding:0.5rem; border-radius:6px; border:1px solid #ccc; margin-bottom:1rem; width:100%; }
 #loginBox button { padding:0.5rem 1rem; border:none; border-radius:6px; background:#007bff; color:white; cursor:pointer; margin:0.2rem; }
 
-form input, form textarea {
-  width:100%; margin-bottom:0.5rem; padding:0.5rem; border-radius:6px; border:1px solid #ccc;
-}
+form input, form textarea { width:100%; margin-bottom:0.5rem; padding:0.5rem; border-radius:6px; border:1px solid #ccc; }
 form button { padding:0.4rem 0.8rem; border-radius:6px; border:none; background:#007bff; color:white; cursor:pointer; }
 .rating button { margin-right:0.5rem; cursor:pointer; }
 
 /* Responsive Mobile */
 @media (max-width:768px){
   main { grid-template-columns:1fr; padding:1rem; }
-  main > div:first-child { order:2; }
-  main > div:last-child { order:1; }
   /* Video zwischen Über mich und Ideenschmiede */
-  #mobileVideoContainer { order:1; margin-bottom:1rem; }
+  #videoContainer { order:2; margin-bottom:1rem; }
 }
 </style>
 </head>
@@ -160,13 +94,13 @@ form button { padding:0.4rem 0.8rem; border-radius:6px; border:none; background:
     <p>Geht dich garnichts an.</p>
   </div>
 
-  <!-- Mobile Video Container -->
-  <div id="mobileVideoContainer" class="card">
+  <!-- Video Container (einziges Element) -->
+  <div id="videoContainer" class="card">
     <h2>Video</h2>
-    <iframe id="ytVideoMobile" width="100%" height="250" 
+    <iframe id="ytVideo" width="100%" height="250"
       src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=0&mute=1"
-      title="YouTube Video"
-      frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+      title="YouTube Video" frameborder="0"
+      allow="autoplay; encrypted-media" allowfullscreen></iframe>
   </div>
 
   <section class="blog" id="blog">
@@ -177,12 +111,13 @@ form button { padding:0.4rem 0.8rem; border-radius:6px; border:none; background:
 </div>
 
 <div>
-  <div class="card">
+  <!-- Desktop Video bleibt oben rechts -->
+  <div class="card" id="desktopVideoWrapper">
     <h2>Video</h2>
     <iframe id="ytVideoDesktop" width="100%" height="250"
       src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=0&mute=1"
-      title="YouTube Video"
-      frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+      title="YouTube Video" frameborder="0"
+      allow="autoplay; encrypted-media" allowfullscreen></iframe>
   </div>
 </div>
 </main>
@@ -201,30 +136,32 @@ form button { padding:0.4rem 0.8rem; border-radius:6px; border:none; background:
 </div>
 
 <script>
-document.addEventListener("DOMContentLoaded", () => {
-  const darkBtn = document.getElementById("darkModeBtn");
-  const loginBtn = document.getElementById("loginBtn");
-  const cancelBtn = document.getElementById("loginCancelBtn");
-  const submitBtn = document.getElementById("loginSubmitBtn");
-  const loginModal = document.getElementById("loginModal");
-  darkBtn?.addEventListener("click", () => document.body.classList.toggle("dark"));
-  loginBtn?.addEventListener("click", () => loginModal.classList.add("show"));
-  cancelBtn?.addEventListener("click", () => loginModal.classList.remove("show"));
-  submitBtn?.addEventListener("click", () => {
-    const pw = document.getElementById("adminPw").value;
+document.addEventListener("DOMContentLoaded",()=>{
+  const darkBtn=document.getElementById("darkModeBtn");
+  const loginBtn=document.getElementById("loginBtn");
+  const cancelBtn=document.getElementById("loginCancelBtn");
+  const submitBtn=document.getElementById("loginSubmitBtn");
+  const loginModal=document.getElementById("loginModal");
+  const video=document.getElementById("ytVideo");
+
+  darkBtn?.addEventListener("click",()=>document.body.classList.toggle("dark"));
+  loginBtn?.addEventListener("click",()=>loginModal.classList.add("show"));
+  cancelBtn?.addEventListener("click",()=>loginModal.classList.remove("show"));
+  submitBtn?.addEventListener("click",()=>{
+    const pw=document.getElementById("adminPw").value;
     if(pw==="ichbinadmin"){ sessionStorage.setItem("isAdmin","true"); window.location.href="admin.html"; }
     else alert("Falsches Passwort!");
   });
 
   // Besucherzähler
-  const visitorCounter = document.getElementById("visitorCounter");
-  let count = Number(localStorage.getItem("visitorCount")||0)+1;
+  const visitorCounter=document.getElementById("visitorCounter");
+  let count=Number(localStorage.getItem("visitorCount")||0)+1;
   localStorage.setItem("visitorCount",count);
   visitorCounter.textContent="Besucher: "+count;
 
   // Blog laden
-  const blogList = document.getElementById("blogList");
-  const posts = JSON.parse(localStorage.getItem("blogPosts")||"[]");
+  const blogList=document.getElementById("blogList");
+  const posts=JSON.parse(localStorage.getItem("blogPosts")||"[]");
   function renderPosts(){
     blogList.innerHTML="";
     posts.forEach((post,index)=>{
@@ -261,8 +198,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const rating=document.createElement("div"); rating.className="rating";
       const upBtn=document.createElement("button"); upBtn.textContent=`👍 ${post.up||0}`;
       const downBtn=document.createElement("button"); downBtn.textContent=`👎 ${post.down||0}`;
-      upBtn.onclick=()=>vote(index,"up");
-      downBtn.onclick=()=>vote(index,"down");
+      upBtn.onclick=()=>vote(index,"up"); downBtn.onclick=()=>vote(index,"down");
       rating.appendChild(upBtn); rating.appendChild(downBtn);
 
       card.appendChild(title); card.appendChild(content); card.appendChild(form);
@@ -286,18 +222,13 @@ document.addEventListener("DOMContentLoaded", () => {
   function savePosts(){ localStorage.setItem("blogPosts",JSON.stringify(posts)); }
   renderPosts();
 
-  // Video starten bei Mausbewegung / Touch / Scroll
-  const ytDesktop=document.getElementById("ytVideoDesktop");
-  const ytMobile=document.getElementById("ytVideoMobile");
-
+  // Video starten bei Mausbewegung / Touch / Scroll nur einmal
   function startVideo(){
-    if(window.innerWidth>768) ytDesktop.src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=0";
-    else ytMobile.src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=0";
+    video.src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=0";
     document.removeEventListener("mousemove",startVideo);
     document.removeEventListener("touchstart",startVideo);
     document.removeEventListener("scroll",startVideo);
   }
-
   document.addEventListener("mousemove",startVideo,{once:true});
   document.addEventListener("touchstart",startVideo,{once:true});
   document.addEventListener("scroll",startVideo,{once:true});
