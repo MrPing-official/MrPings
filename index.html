@@ -77,11 +77,19 @@
       margin-bottom: 1rem;
     }
     .comment {
+      margin-bottom: 0.8rem;
+      padding: 0.6rem;
+      border-radius: 6px;
       background: #2a2a2a;
       color: #fff;
-      padding: 0.4rem;
-      border-radius: 6px;
-      margin-bottom: 0.5rem;
+    }
+    .comment .author {
+      font-weight: bold;
+      margin-bottom: 0.2rem;
+    }
+    .comment .text {
+      margin-left: 0.5rem;
+      font-size: 0.95rem;
     }
     .visitor-counter {
       position: fixed;
@@ -134,7 +142,7 @@
 
       <div class="card">
         <h2>Über mich</h2>
-        <p>Jung, ideenreich, Elektromeister, Spaßvogel.</p>
+        <p>Geht dich ganrnichts an.</p>
       </div>
 
       <!-- Blogbereich -->
@@ -215,7 +223,10 @@
         (post.comments || []).forEach(c => {
           const div = document.createElement("div");
           div.className = "comment";
-          div.textContent = c.name + ": " + c.text;
+          div.innerHTML = \`
+            <div class="author">\${c.name}</div>
+            <div class="text">\${c.text}</div>
+          \`;
           commentList.appendChild(div);
         });
 
@@ -228,82 +239,3 @@
         upBtn.style.marginRight = "0.5rem";
         const downBtn = document.createElement("button");
         downBtn.className = "action";
-        downBtn.textContent = \`👎 \${post.down || 0}\`;
-
-        upBtn.onclick = (e) => { e.preventDefault(); ratePost(index, "up"); };
-        downBtn.onclick = (e) => { e.preventDefault(); ratePost(index, "down"); };
-
-        rating.appendChild(upBtn);
-        rating.appendChild(downBtn);
-
-        card.appendChild(title);
-        card.appendChild(content);
-        card.appendChild(commentForm);
-        card.appendChild(commentList);
-        card.appendChild(rating);
-
-        blogList.appendChild(card);
-      });
-    }
-
-    function addComment(e, postIndex) {
-      e.preventDefault();
-      const posts = JSON.parse(localStorage.getItem("blogPosts") || "[]");
-      const name = document.getElementById(\`name-\${postIndex}\`).value.trim();
-      const text = document.getElementById(\`comment-\${postIndex}\`).value.trim();
-
-      if (!name || !text) return;
-
-      posts[postIndex].comments = posts[postIndex].comments || [];
-      posts[postIndex].comments.push({ name, text });
-      posts[postIndex].rated = posts[postIndex].rated || {};
-      savePosts(posts);
-      loadBlog();
-    }
-
-    function ratePost(postIndex, type) {
-      const posts = JSON.parse(localStorage.getItem("blogPosts") || "[]");
-      const name = prompt("Bitte gib deinen Namen ein, um abzustimmen:");
-
-      if (!name) return;
-      posts[postIndex].comments = posts[postIndex].comments || [];
-      const hasComment = posts[postIndex].comments.some(c => c.name === name);
-
-      if (!hasComment) {
-        alert("Du musst zuerst einen Kommentar verfassen, um abzustimmen.");
-        return;
-      }
-
-      posts[postIndex].rated = posts[postIndex].rated || {};
-      if (posts[postIndex].rated[name]) {
-        alert("Du hast bereits abgestimmt!");
-        return;
-      }
-
-      if (type === "up") posts[postIndex].up = (posts[postIndex].up || 0) + 1;
-      if (type === "down") posts[postIndex].down = (posts[postIndex].down || 0) + 1;
-      posts[postIndex].rated[name] = true;
-
-      savePosts(posts);
-      loadBlog();
-    }
-
-    function savePosts(posts) {
-      localStorage.setItem("blogPosts", JSON.stringify(posts));
-    }
-
-    // Besucherzähler
-    function updateVisitorCounter() {
-      let count = localStorage.getItem("visitorCount") || 0;
-      count++;
-      localStorage.setItem("visitorCount", count);
-      document.getElementById("visitorCounter").textContent = "Besucher: " + count;
-    }
-
-    document.addEventListener("DOMContentLoaded", () => {
-      loadBlog();
-      updateVisitorCounter();
-    });
-  </script>
-</body>
-</html>
