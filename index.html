@@ -69,8 +69,7 @@ form button { padding:0.4rem 0.8rem; border-radius:6px; border:none; background:
 /* Responsive Mobile */
 @media (max-width:768px){
   main { grid-template-columns:1fr; padding:1rem; }
-  /* Video zwischen Über mich und Ideenschmiede */
-  #videoContainer { order:2; margin-bottom:1rem; }
+  #videoContainer { order:2; margin-bottom:1rem; } /* Video zwischen Über mich und Ideenschmiede */
 }
 </style>
 </head>
@@ -94,7 +93,7 @@ form button { padding:0.4rem 0.8rem; border-radius:6px; border:none; background:
     <p>Geht dich garnichts an.</p>
   </div>
 
-  <!-- Video Container (einziges Element) -->
+  <!-- Video Container -->
   <div id="videoContainer" class="card">
     <h2>Video</h2>
     <iframe id="ytVideo" width="100%" height="250"
@@ -111,14 +110,7 @@ form button { padding:0.4rem 0.8rem; border-radius:6px; border:none; background:
 </div>
 
 <div>
-  <!-- Desktop Video bleibt oben rechts -->
-  <div class="card" id="desktopVideoWrapper">
-    <h2>Video</h2>
-    <iframe id="ytVideoDesktop" width="100%" height="250"
-      src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=0&mute=1"
-      title="YouTube Video" frameborder="0"
-      allow="autoplay; encrypted-media" allowfullscreen></iframe>
-  </div>
+  <!-- Rechter Bereich für Desktop -->
 </div>
 </main>
 
@@ -137,6 +129,7 @@ form button { padding:0.4rem 0.8rem; border-radius:6px; border:none; background:
 
 <script>
 document.addEventListener("DOMContentLoaded",()=>{
+
   const darkBtn=document.getElementById("darkModeBtn");
   const loginBtn=document.getElementById("loginBtn");
   const cancelBtn=document.getElementById("loginCancelBtn");
@@ -162,6 +155,7 @@ document.addEventListener("DOMContentLoaded",()=>{
   // Blog laden
   const blogList=document.getElementById("blogList");
   const posts=JSON.parse(localStorage.getItem("blogPosts")||"[]");
+
   function renderPosts(){
     blogList.innerHTML="";
     posts.forEach((post,index)=>{
@@ -222,7 +216,7 @@ document.addEventListener("DOMContentLoaded",()=>{
   function savePosts(){ localStorage.setItem("blogPosts",JSON.stringify(posts)); }
   renderPosts();
 
-  // Video starten bei Mausbewegung / Touch / Scroll nur einmal
+  // Video starten bei Mausbewegung / Touch / Scroll (nur einmal)
   function startVideo(){
     video.src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=0";
     document.removeEventListener("mousemove",startVideo);
@@ -232,6 +226,7 @@ document.addEventListener("DOMContentLoaded",()=>{
   document.addEventListener("mousemove",startVideo,{once:true});
   document.addEventListener("touchstart",startVideo,{once:true});
   document.addEventListener("scroll",startVideo,{once:true});
+
 });
 </script>
 </body>
