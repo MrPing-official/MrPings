@@ -2,6 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>haertfelder.me</title>
 <style>
   :root {
@@ -101,7 +102,6 @@
     box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     font-size: 0.9rem;
   }
-  /* Login Modal */
   #loginModal {
     display: none;
     position: fixed;
@@ -127,9 +127,7 @@
     transform: scale(0.8);
     transition: transform 0.3s ease;
   }
-  #loginModal.show #loginBox {
-    transform: scale(1);
-  }
+  #loginModal.show #loginBox { transform: scale(1); }
   #loginBox input {
     padding: 0.5rem;
     border-radius: 6px;
@@ -161,9 +159,22 @@
     color: white;
     cursor: pointer;
   }
-  .rating button {
-    margin-right: 0.5rem;
-    cursor: pointer;
+  .rating button { margin-right: 0.5rem; cursor: pointer; }
+
+  /* RESPONSIVE LAYOUT */
+  @media (max-width: 900px) {
+    main {
+      grid-template-columns: 1fr;
+      padding: 1rem;
+    }
+    header { flex-direction: column; gap: 0.5rem; text-align: center; }
+    .header-buttons { justify-content: center; }
+    iframe { height: 200px; }
+  }
+  @media (max-width: 500px) {
+    header h1 { font-size: 1.3rem; }
+    header button { font-size: 1.5rem; }
+    .card { padding: 1rem; }
   }
 </style>
 </head>
@@ -197,17 +208,13 @@
       <h2>Video</h2>
       <iframe width="100%" height="250" 
         src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=1" 
-        title="YouTube Video" 
-        frameborder="0" 
-        allow="autoplay; encrypted-media" 
-        allowfullscreen></iframe>
+        title="YouTube Video" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
     </div>
   </div>
 </main>
 
 <div class="visitor-counter" id="visitorCounter">Besucher: 0</div>
 
-<!-- Login Modal -->
 <div id="loginModal">
   <div id="loginBox">
     <h2>🔑 Admin Login</h2>
@@ -226,7 +233,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const submitBtn = document.getElementById("loginSubmitBtn");
   const loginModal = document.getElementById("loginModal");
 
-  // Darkmode mit Iconwechsel
+  // Darkmode + Iconwechsel
   darkBtn.addEventListener("click", () => {
     document.body.classList.toggle("dark");
     darkBtn.textContent = document.body.classList.contains("dark") ? "☀️" : "🌙";
@@ -237,33 +244,32 @@ document.addEventListener("DOMContentLoaded", () => {
   cancelBtn.addEventListener("click", () => loginModal.classList.remove("show"));
   submitBtn.addEventListener("click", () => {
     const pw = document.getElementById("adminPw").value;
-    if(pw === "ichbinadmin") {
-      sessionStorage.setItem("isAdmin", "true");
-      window.location.href = "admin.html";
+    if(pw === "ichbinadmin"){
+      sessionStorage.setItem("isAdmin","true");
+      window.location.href="admin.html";
     } else alert("Falsches Passwort!");
   });
 
-  // Animierter Besucherzähler
+  // Besucherzähler animiert
   const visitorCounter = document.getElementById("visitorCounter");
-  let count = Number(localStorage.getItem("visitorCount") || 0) + 1;
-  localStorage.setItem("visitorCount", count);
-  let displayedCount = 0;
+  let count = Number(localStorage.getItem("visitorCount") || 0);
+  const targetCount = count + 1;
   const interval = setInterval(() => {
-    if(displayedCount < count){
-      displayedCount++;
-      visitorCounter.textContent = "Besucher: " + displayedCount;
-    } else clearInterval(interval);
-  }, 20);
+    count++;
+    visitorCounter.textContent = "Besucher: " + count;
+    if(count >= targetCount) clearInterval(interval);
+  }, 30);
+  localStorage.setItem("visitorCount", targetCount);
 
-  // Blog laden (vollständig angezeigt)
+  // Blog laden
   const blogList = document.getElementById("blogList");
   const posts = JSON.parse(localStorage.getItem("blogPosts") || "[]");
 
-  function renderPosts() {
+  function renderPosts(){
     blogList.innerHTML = "";
-    posts.forEach((post, index) => {
+    posts.forEach((post,index)=>{
       const card = document.createElement("div");
-      card.className = "card";
+      card.className="card";
 
       const title = document.createElement("h3");
       title.textContent = post.title;
@@ -273,42 +279,42 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Kommentarformular
       const form = document.createElement("form");
-      form.onsubmit = e => {
+      form.onsubmit = e=>{
         e.preventDefault();
-        const name = form.querySelector(`#name-${index}`).value.trim();
-        const text = form.querySelector(`#comment-${index}`).value.trim();
-        if(!name || !text) return;
-        post.comments = post.comments || [];
-        post.comments.push({ name, text });
-        post.rated = post.rated || {};
+        const name=form.querySelector(`#name-${index}`).value.trim();
+        const text=form.querySelector(`#comment-${index}`).value.trim();
+        if(!name||!text) return;
+        post.comments = post.comments||[];
+        post.comments.push({name,text});
+        post.rated = post.rated||{};
         savePosts();
         renderPosts();
       };
-      form.innerHTML = `
+      form.innerHTML=`
         <input type="text" id="name-${index}" placeholder="Dein Name" required>
         <textarea id="comment-${index}" placeholder="Kommentar..." required></textarea>
         <button type="submit">Kommentieren</button>
       `;
 
-      // Kommentare
+      // Kommentare animiert
       const commentList = document.createElement("div");
-      (post.comments || []).forEach(c => {
+      (post.comments||[]).forEach(c=>{
         const div = document.createElement("div");
-        div.className = "comment";
-        div.textContent = `${c.name}: ${c.text}`;
+        div.className="comment";
+        div.textContent=`${c.name}: ${c.text}`;
         commentList.appendChild(div);
-        setTimeout(() => div.classList.add("show"), 50);
+        setTimeout(()=>div.classList.add("show"),50);
       });
 
       // Bewertung
-      const rating = document.createElement("div");
-      rating.className = "rating";
-      const upBtn = document.createElement("button");
-      upBtn.textContent = `👍 ${post.up || 0}`;
-      const downBtn = document.createElement("button");
-      downBtn.textContent = `👎 ${post.down || 0}`;
-      upBtn.onclick = () => vote(index, "up");
-      downBtn.onclick = () => vote(index, "down");
+      const rating=document.createElement("div");
+      rating.className="rating";
+      const upBtn=document.createElement("button");
+      upBtn.textContent=`👍 ${post.up||0}`;
+      const downBtn=document.createElement("button");
+      downBtn.textContent=`👎 ${post.down||0}`;
+      upBtn.onclick=()=>vote(index,"up");
+      downBtn.onclick=()=>vote(index,"down");
       rating.appendChild(upBtn);
       rating.appendChild(downBtn);
 
@@ -317,27 +323,26 @@ document.addEventListener("DOMContentLoaded", () => {
       card.appendChild(form);
       card.appendChild(commentList);
       card.appendChild(rating);
-
       blogList.appendChild(card);
     });
   }
 
-  function vote(postIndex, type) {
-    const name = prompt("Bitte gib deinen Namen ein, um abzustimmen:");
+  function vote(postIndex,type){
+    const name=prompt("Bitte gib deinen Namen ein, um abzustimmen:");
     if(!name) return;
-    const post = posts[postIndex];
-    post.comments = post.comments || [];
-    if(!post.comments.some(c => c.name === name)) return alert("Du musst zuerst kommentieren!");
-    post.rated = post.rated || {};
+    const post=posts[postIndex];
+    post.comments=post.comments||[];
+    if(!post.comments.some(c=>c.name===name)) return alert("Du musst zuerst kommentieren!");
+    post.rated=post.rated||{};
     if(post.rated[name]) return alert("Du hast bereits abgestimmt!");
-    if(type === "up") post.up = (post.up || 0) + 1;
-    if(type === "down") post.down = (post.down || 0) + 1;
-    post.rated[name] = true;
+    if(type==="up") post.up=(post.up||0)+1;
+    if(type==="down") post.down=(post.down||0)+1;
+    post.rated[name]=true;
     savePosts();
     renderPosts();
   }
 
-  function savePosts() { localStorage.setItem("blogPosts", JSON.stringify(posts)); }
+  function savePosts(){ localStorage.setItem("blogPosts",JSON.stringify(posts)); }
 
   renderPosts();
 });
