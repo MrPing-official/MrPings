@@ -94,6 +94,24 @@
       box-shadow: 0 2px 6px rgba(0,0,0,0.2);
       font-size: 0.9rem;
     }
+    input, textarea {
+      width: 100%;
+      margin-bottom: 0.5rem;
+      padding: 0.5rem;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    button.action {
+      background: #007bff;
+      color: white;
+      padding: 0.4rem 0.8rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button.action:hover {
+      background: #0056b3;
+    }
   </style>
 </head>
 <body>
@@ -116,7 +134,7 @@
 
       <div class="card">
         <h2>Über mich</h2>
-        <p>Das geht dich überhaupt nix an, ich möchte hier lediglich einen Monolog führen.</p>
+        <p>Jung, ideenreich, Elektromeister, Spaßvogel.</p>
       </div>
 
       <!-- Blogbereich -->
@@ -188,7 +206,7 @@
         commentForm.innerHTML = `
           <input type="text" id="name-${index}" placeholder="Dein Name" required>
           <textarea id="comment-${index}" placeholder="Kommentar..." required></textarea>
-          <button type="submit">Kommentieren</button>
+          <button type="submit" class="action">Kommentieren</button>
         `;
 
         // Kommentarliste
@@ -205,13 +223,15 @@
         const rating = document.createElement("div");
         rating.style.marginTop = "0.5rem";
         const upBtn = document.createElement("button");
+        upBtn.className = "action";
         upBtn.textContent = \`👍 \${post.up || 0}\`;
         upBtn.style.marginRight = "0.5rem";
         const downBtn = document.createElement("button");
+        downBtn.className = "action";
         downBtn.textContent = \`👎 \${post.down || 0}\`;
 
-        upBtn.onclick = () => ratePost(index, "up");
-        downBtn.onclick = () => ratePost(index, "down");
+        upBtn.onclick = (e) => { e.preventDefault(); ratePost(index, "up"); };
+        downBtn.onclick = (e) => { e.preventDefault(); ratePost(index, "down"); };
 
         rating.appendChild(upBtn);
         rating.appendChild(downBtn);
