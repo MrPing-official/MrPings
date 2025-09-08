@@ -1,338 +1,109 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <title>haertfelder.me</title>
-  <style>
-    :root {
-      --bg-color: #f4f4f9;
-      --text-color: #222;
-      --card-bg: #ffffff;
-      --header-bg: #1e1e1e;
-      --header-text: #fff;
-    }
-    body.dark {
-      --bg-color: #121212;
-      --text-color: #fff;
-      --card-bg: #1e1e1e;
-      --header-bg: #000;
-      --header-text: #fff;
-    }
-    body {
-      font-family: system-ui, sans-serif;
-      margin: 0;
-      background: var(--bg-color);
-      color: var(--text-color);
-      transition: background 0.3s, color 0.3s;
-    }
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 2rem;
-      background: var(--header-bg);
-      color: var(--header-text);
-      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-    }
-    header h1 {
-      font-size: 1.6rem;
-      font-weight: bold;
-      text-shadow: 0 0 8px #00d4ff, 0 0 12px #007bff;
-    }
-    .header-buttons {
-      display: flex;
-      gap: 0.5rem;
-    }
-    header button {
-      background: transparent;
-      font-size: 1.8rem;
-      border: none;
-      cursor: pointer;
-    }
-    main {
-      display: grid;
-      grid-template-columns: 2fr 1fr;
-      gap: 2rem;
-      padding: 2rem;
-    }
-    .card {
-      background: var(--card-bg);
-      border-radius: 12px;
-      padding: 1.5rem;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-      margin-bottom: 1.5rem;
-    }
-    .banner {
-      background: linear-gradient(90deg, #007bff, #00d4ff);
-      color: #fff;
-      font-size: 1.3rem;
-      font-weight: bold;
-      text-align: center;
-      padding: 0.8rem;
-      border-radius: 12px;
-      margin-bottom: 1rem;
-    }
-    .comment {
-      background: #2a2a2a;
-      color: #fff;
-      padding: 0.4rem;
-      border-radius: 6px;
-      margin-bottom: 0.5rem;
-    }
-    .visitor-counter {
-      position: fixed;
-      bottom: 10px;
-      right: 10px;
-      background: var(--card-bg);
-      color: var(--text-color);
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-      font-size: 0.9rem;
-    }
-    /* Login Modal */
-    #loginModal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.7);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    #loginBox {
-      background: var(--card-bg);
-      color: var(--text-color);
-      padding: 2rem;
-      border-radius: 10px;
-      text-align: center;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
-      width: 300px;
-    }
-    #loginBox input {
-      padding: 0.5rem;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      margin-bottom: 1rem;
-      width: 100%;
-    }
-    #loginBox button {
-      padding: 0.5rem 1rem;
-      border: none;
-      border-radius: 6px;
-      background: #007bff;
-      color: white;
-      cursor: pointer;
-      margin: 0.2rem;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>Test Buttons</title>
+<style>
+  body {
+    font-family: sans-serif;
+    margin: 0;
+    background: #f4f4f9;
+    color: #222;
+    transition: background 0.3s, color 0.3s;
+  }
+  body.dark {
+    background: #121212;
+    color: #fff;
+  }
+  header {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    background: #1e1e1e;
+    color: #fff;
+  }
+  header button {
+    font-size: 1.5rem;
+    cursor: pointer;
+    margin-left: 0.5rem;
+  }
+  #loginModal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    justify-content: center;
+    align-items: center;
+    display: flex;
+  }
+  #loginBox {
+    background: #fff;
+    color: #000;
+    padding: 2rem;
+    border-radius: 10px;
+    text-align: center;
+  }
+  #loginBox button {
+    margin: 0.5rem;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+  }
+</style>
 </head>
 <body>
-  <header>
-    <h1>💡 haertfelder.me</h1>
-    <div class="header-buttons">
-      <button id="darkModeBtn">🌙</button>
-      <button id="loginBtn">🦆</button>
-    </div>
-  </header>
-
-  <main>
-    <div>
-      <div class="card">
-        <h2>Willkommen!</h2>
-        <p>Diese Seite ist hauptsächlich für mich, um meine Gedanken und Ideen jederzeit festzuhalten.</p>
-      </div>
-      <div class="card">
-        <h2>Über mich</h2>
-        <p>Jung, ideenreich, Elektromeister, Spaßvogel.</p>
-      </div>
-      <section class="blog" id="blog">
-        <div class="banner">💡 Ideenschmiede</div>
-        <h2>Blogeinträge</h2>
-        <div id="blogList"></div>
-      </section>
-    </div>
-    <div>
-      <div class="card">
-        <h2>Video</h2>
-        <iframe width="100%" height="250" 
-          src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=1" 
-          title="YouTube Video" 
-          frameborder="0" 
-          allow="autoplay; encrypted-media" 
-          allowfullscreen></iframe>
-      </div>
-    </div>
-  </main>
-
-  <div class="visitor-counter" id="visitorCounter">Besucher: 0</div>
-
-  <!-- Login Modal -->
-  <div id="loginModal">
-    <div id="loginBox">
-      <h2>🔑 Admin Login</h2>
-      <input type="password" id="adminPw" placeholder="Passwort">
-      <br>
-      <button id="loginSubmitBtn">Login</button>
-      <button id="loginCancelBtn">Abbrechen</button>
-    </div>
+<header>
+  <h1>Testseite</h1>
+  <div>
+    <button id="darkModeBtn">🌙</button>
+    <button id="loginBtn">🦆</button>
   </div>
+</header>
 
-  <script>
-    // Darkmode
-    function toggleDarkMode() {
+<div id="loginModal">
+  <div id="loginBox">
+    <h2>Login</h2>
+    <input type="password" id="adminPw" placeholder="Passwort"><br>
+    <button id="loginSubmitBtn">Login</button>
+    <button id="loginCancelBtn">Abbrechen</button>
+  </div>
+</div>
+
+<script>
+  // Extra sichere EventListener
+  const darkBtn = document.getElementById("darkModeBtn");
+  const loginBtn = document.getElementById("loginBtn");
+  const cancelBtn = document.getElementById("loginCancelBtn");
+  const submitBtn = document.getElementById("loginSubmitBtn");
+  const loginModal = document.getElementById("loginModal");
+
+  if (darkBtn) {
+    darkBtn.addEventListener("click", () => {
       document.body.classList.toggle("dark");
-    }
-
-    // Login Modal
-    function openLogin() {
-      document.getElementById("loginModal").style.display = "flex";
-    }
-    function closeLogin() {
-      document.getElementById("loginModal").style.display = "none";
-    }
-
-    // Admin Login
-    function login() {
-      const pw = document.getElementById("adminPw").value;
-      if (pw === "123") {
-        sessionStorage.setItem("isAdmin", "true");
-        window.location.href = "admin.html";
-      } else {
-        alert("Falsches Passwort!");
-      }
-    }
-
-    // Besucherzähler
-    function updateVisitorCounter() {
-      let count = localStorage.getItem("visitorCount") || 0;
-      count++;
-      localStorage.setItem("visitorCount", count);
-      document.getElementById("visitorCounter").textContent = "Besucher: " + count;
-    }
-
-    // Blog laden
-    function loadBlog() {
-      const blogList = document.getElementById("blogList");
-      blogList.innerHTML = "";
-      const posts = JSON.parse(localStorage.getItem("blogPosts") || "[]");
-
-      posts.forEach((post, index) => {
-        const card = document.createElement("div");
-        card.className = "card";
-
-        const title = document.createElement("h3");
-        title.textContent = post.title;
-        title.style.cursor = "pointer";
-
-        const content = document.createElement("p");
-        content.textContent = post.text;
-        content.style.display = "none";
-
-        title.onclick = () => {
-          content.style.display = content.style.display === "none" ? "block" : "none";
-        };
-
-        // Kommentarformular
-        const commentForm = document.createElement("form");
-        commentForm.onsubmit = (e) => addComment(e, index);
-        commentForm.innerHTML = `
-          <input type="text" id="name-${index}" placeholder="Dein Name" required>
-          <textarea id="comment-${index}" placeholder="Kommentar..." required></textarea>
-          <button type="submit">Kommentieren</button>
-        `;
-
-        // Kommentarliste
-        const commentList = document.createElement("div");
-        commentList.id = \`commentList-${index}\`;
-        (post.comments || []).forEach(c => {
-          const div = document.createElement("div");
-          div.className = "comment";
-          div.textContent = c.name + ": " + c.text;
-          commentList.appendChild(div);
-        });
-
-        // Bewertung
-        const rating = document.createElement("div");
-        rating.style.marginTop = "0.5rem";
-        const upBtn = document.createElement("button");
-        upBtn.textContent = \`👍 \${post.up || 0}\`;
-        upBtn.style.marginRight = "0.5rem";
-        const downBtn = document.createElement("button");
-        downBtn.textContent = \`👎 \${post.down || 0}\`;
-
-        upBtn.onclick = () => ratePost(index, "up");
-        downBtn.onclick = () => ratePost(index, "down");
-
-        rating.appendChild(upBtn);
-        rating.appendChild(downBtn);
-
-        card.appendChild(title);
-        card.appendChild(content);
-        card.appendChild(commentForm);
-        card.appendChild(commentList);
-        card.appendChild(rating);
-
-        blogList.appendChild(card);
-      });
-    }
-
-    function addComment(e, postIndex) {
-      e.preventDefault();
-      const posts = JSON.parse(localStorage.getItem("blogPosts") || "[]");
-      const name = document.getElementById(\`name-${postIndex}\`).value.trim();
-      const text = document.getElementById(\`comment-${postIndex}\`).value.trim();
-
-      if (!name || !text) return;
-
-      posts[postIndex].comments = posts[postIndex].comments || [];
-      posts[postIndex].comments.push({ name, text });
-      posts[postIndex].rated = posts[postIndex].rated || {};
-      savePosts(posts);
-      loadBlog();
-    }
-
-    function ratePost(postIndex, type) {
-      const posts = JSON.parse(localStorage.getItem("blogPosts") || "[]");
-      const name = prompt("Bitte gib deinen Namen ein, um abzustimmen:");
-
-      if (!name) return;
-      posts[postIndex].comments = posts[postIndex].comments || [];
-      const hasComment = posts[postIndex].comments.some(c => c.name === name);
-
-      if (!hasComment) {
-        alert("Du musst zuerst einen Kommentar verfassen, um abzustimmen.");
-        return;
-      }
-
-      posts[postIndex].rated = posts[postIndex].rated || {};
-      if (posts[postIndex].rated[name]) {
-        alert("Du hast bereits abgestimmt!");
-        return;
-      }
-
-      if (type === "up") posts[postIndex].up = (posts[postIndex].up || 0) + 1;
-      if (type === "down") posts[postIndex].down = (posts[postIndex].down || 0) + 1;
-      posts[postIndex].rated[name] = true;
-
-      savePosts(posts);
-      loadBlog();
-    }
-
-    function savePosts(posts) {
-      localStorage.setItem("blogPosts", JSON.stringify(posts));
-    }
-
-    // EventListener setzen
-    document.addEventListener("DOMContentLoaded", () => {
-      document.getElementById("darkModeBtn").addEventListener("click", toggleDarkMode);
-      document.getElementById("loginBtn").addEventListener("click", openLogin);
-      document.getElementById("loginCancelBtn").addEventListener("click", closeLogin);
-      document.getElementById("loginSubmitBtn").addEventListener("click", login);
-
-      loadBlog();
-      updateVisitorCounter();
+      console.log("Darkmode toggled"); // Testausgabe
     });
-  </script>
+  } else { console.error("Darkmode Button nicht gefunden"); }
+
+  if (loginBtn) {
+    loginBtn.addEventListener("click", () => {
+      loginModal.style.display = "flex";
+      console.log("Login Modal geöffnet");
+    });
+  } else { console.error("Login Button nicht gefunden"); }
+
+  if (cancelBtn) {
+    cancelBtn.addEventListener("click", () => {
+      loginModal.style.display = "none";
+      console.log("Login Modal geschlossen");
+    });
+  } else { console.error("Cancel Button nicht gefunden"); }
+
+  if (submitBtn) {
+    submitBtn.addEventListener("click", () => {
+      const pw = document.getElementById("adminPw").value;
+      if (pw === "123") alert("Login erfolgreich");
+      else alert("Falsches Passwort");
+    });
+  } else { console.error("Submit Button nicht gefunden"); }
+</script>
 </body>
 </html>
