@@ -80,6 +80,13 @@
     padding: 0.4rem;
     border-radius: 6px;
     margin-bottom: 0.5rem;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+  .comment.show {
+    opacity: 1;
+    transform: translateY(0);
   }
   .visitor-counter {
     position: fixed;
@@ -175,7 +182,7 @@
     </div>
     <div class="card">
       <h2>Über mich</h2>
-      <p>Das geht dich garnix an.</p>
+      <p>Geht dich garnichts an.</p>
     </div>
     <section class="blog" id="blog">
       <div class="banner">💡 Ideenschmiede</div>
@@ -281,6 +288,7 @@ document.addEventListener("DOMContentLoaded", () => {
         div.className = "comment";
         div.textContent = `${c.name}: ${c.text}`;
         commentList.appendChild(div);
+        setTimeout(() => div.classList.add("show"), 50); // Animation
       });
 
       // Bewertung
