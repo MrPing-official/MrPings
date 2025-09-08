@@ -23,7 +23,7 @@
     margin: 0;
     background: var(--bg-color);
     color: var(--text-color);
-    transition: background 0.3s, color 0.3s;
+    transition: background 0.5s, color 0.5s;
   }
   header {
     display: flex;
@@ -48,7 +48,9 @@
     font-size: 1.8rem;
     border: none;
     cursor: pointer;
+    transition: transform 0.2s;
   }
+  header button:hover { transform: scale(1.2); }
   main {
     display: grid;
     grid-template-columns: 2fr 1fr;
@@ -61,9 +63,9 @@
     padding: 1.5rem;
     box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     margin-bottom: 1.5rem;
-    transition: transform 0.2s;
+    transition: transform 0.3s, box-shadow 0.3s;
   }
-  .card:hover { transform: translateY(-3px); }
+  .card:hover { transform: translateY(-5px); box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
   .banner {
     background: linear-gradient(90deg, #007bff, #00d4ff);
     color: #fff;
@@ -218,31 +220,42 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-  // Buttons
   const darkBtn = document.getElementById("darkModeBtn");
   const loginBtn = document.getElementById("loginBtn");
   const cancelBtn = document.getElementById("loginCancelBtn");
   const submitBtn = document.getElementById("loginSubmitBtn");
   const loginModal = document.getElementById("loginModal");
 
-  darkBtn?.addEventListener("click", () => document.body.classList.toggle("dark"));
-  loginBtn?.addEventListener("click", () => loginModal.classList.add("show"));
-  cancelBtn?.addEventListener("click", () => loginModal.classList.remove("show"));
-  submitBtn?.addEventListener("click", () => {
+  // Darkmode mit Iconwechsel
+  darkBtn.addEventListener("click", () => {
+    document.body.classList.toggle("dark");
+    darkBtn.textContent = document.body.classList.contains("dark") ? "☀️" : "🌙";
+  });
+
+  // Login Modal
+  loginBtn.addEventListener("click", () => loginModal.classList.add("show"));
+  cancelBtn.addEventListener("click", () => loginModal.classList.remove("show"));
+  submitBtn.addEventListener("click", () => {
     const pw = document.getElementById("adminPw").value;
-    if (pw === "ichbinadmin") {
+    if(pw === "ichbinadmin") {
       sessionStorage.setItem("isAdmin", "true");
       window.location.href = "admin.html";
     } else alert("Falsches Passwort!");
   });
 
-  // Besucherzähler
+  // Animierter Besucherzähler
   const visitorCounter = document.getElementById("visitorCounter");
   let count = Number(localStorage.getItem("visitorCount") || 0) + 1;
   localStorage.setItem("visitorCount", count);
-  visitorCounter.textContent = "Besucher: " + count;
+  let displayedCount = 0;
+  const interval = setInterval(() => {
+    if(displayedCount < count){
+      displayedCount++;
+      visitorCounter.textContent = "Besucher: " + displayedCount;
+    } else clearInterval(interval);
+  }, 20);
 
-  // Blog laden
+  // Blog laden (vollständig angezeigt)
   const blogList = document.getElementById("blogList");
   const posts = JSON.parse(localStorage.getItem("blogPosts") || "[]");
 
@@ -254,13 +267,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const title = document.createElement("h3");
       title.textContent = post.title;
-      title.style.cursor = "pointer";
 
       const content = document.createElement("p");
       content.textContent = post.text;
-      content.style.display = "none";
-
-      title.onclick = () => content.style.display = content.style.display === "none" ? "block" : "none";
 
       // Kommentarformular
       const form = document.createElement("form");
@@ -268,7 +277,7 @@ document.addEventListener("DOMContentLoaded", () => {
         e.preventDefault();
         const name = form.querySelector(`#name-${index}`).value.trim();
         const text = form.querySelector(`#comment-${index}`).value.trim();
-        if (!name || !text) return;
+        if(!name || !text) return;
         post.comments = post.comments || [];
         post.comments.push({ name, text });
         post.rated = post.rated || {};
@@ -281,14 +290,14 @@ document.addEventListener("DOMContentLoaded", () => {
         <button type="submit">Kommentieren</button>
       `;
 
-      // Kommentarliste
+      // Kommentare
       const commentList = document.createElement("div");
       (post.comments || []).forEach(c => {
         const div = document.createElement("div");
         div.className = "comment";
         div.textContent = `${c.name}: ${c.text}`;
         commentList.appendChild(div);
-        setTimeout(() => div.classList.add("show"), 50); // Animation
+        setTimeout(() => div.classList.add("show"), 50);
       });
 
       // Bewertung
@@ -308,28 +317,27 @@ document.addEventListener("DOMContentLoaded", () => {
       card.appendChild(form);
       card.appendChild(commentList);
       card.appendChild(rating);
+
       blogList.appendChild(card);
     });
   }
 
   function vote(postIndex, type) {
     const name = prompt("Bitte gib deinen Namen ein, um abzustimmen:");
-    if (!name) return;
+    if(!name) return;
     const post = posts[postIndex];
     post.comments = post.comments || [];
-    if (!post.comments.some(c => c.name === name)) return alert("Du musst zuerst kommentieren!");
+    if(!post.comments.some(c => c.name === name)) return alert("Du musst zuerst kommentieren!");
     post.rated = post.rated || {};
-    if (post.rated[name]) return alert("Du hast bereits abgestimmt!");
-    if (type === "up") post.up = (post.up || 0) + 1;
-    if (type === "down") post.down = (post.down || 0) + 1;
+    if(post.rated[name]) return alert("Du hast bereits abgestimmt!");
+    if(type === "up") post.up = (post.up || 0) + 1;
+    if(type === "down") post.down = (post.down || 0) + 1;
     post.rated[name] = true;
     savePosts();
     renderPosts();
   }
 
-  function savePosts() {
-    localStorage.setItem("blogPosts", JSON.stringify(posts));
-  }
+  function savePosts() { localStorage.setItem("blogPosts", JSON.stringify(posts)); }
 
   renderPosts();
 });
