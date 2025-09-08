@@ -230,7 +230,7 @@ document.addEventListener("DOMContentLoaded", () => {
   cancelBtn?.addEventListener("click", () => loginModal.classList.remove("show"));
   submitBtn?.addEventListener("click", () => {
     const pw = document.getElementById("adminPw").value;
-    if (pw === "123") {
+    if (pw === "ichbinadmin") {
       sessionStorage.setItem("isAdmin", "true");
       window.location.href = "admin.html";
     } else alert("Falsches Passwort!");
