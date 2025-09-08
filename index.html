@@ -40,15 +40,12 @@ header h1 {
   font-weight: bold;
   text-shadow: 0 0 8px #00d4ff, 0 0 12px #007bff;
 }
-.header-buttons {
-  display: flex;
-  gap: 0.5rem;
-}
+.header-buttons { display:flex; gap:0.5rem; }
 header button {
-  background: transparent;
-  font-size: 1.8rem;
-  border: none;
-  cursor: pointer;
+  background:transparent;
+  font-size:1.8rem;
+  border:none;
+  cursor:pointer;
 }
 main {
   display: grid;
@@ -66,161 +63,141 @@ main {
 }
 .card:hover { transform: translateY(-3px); }
 .banner {
-  background: linear-gradient(90deg, #007bff, #00d4ff);
+  background: linear-gradient(90deg,#007bff,#00d4ff);
   color: #fff;
-  font-size: 1.3rem;
-  font-weight: bold;
-  text-align: center;
-  padding: 0.8rem;
-  border-radius: 12px;
-  margin-bottom: 1rem;
+  font-size:1.3rem;
+  font-weight:bold;
+  text-align:center;
+  padding:0.8rem;
+  border-radius:12px;
+  margin-bottom:1rem;
 }
 .comment {
-  background: #2a2a2a;
-  color: #fff;
-  padding: 0.4rem;
-  border-radius: 6px;
-  margin-bottom: 0.5rem;
-  opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  background:#2a2a2a;
+  color:#fff;
+  padding:0.4rem;
+  border-radius:6px;
+  margin-bottom:0.5rem;
+  opacity:0;
+  transform:translateY(10px);
+  transition:opacity 0.3s ease, transform 0.3s ease;
 }
 .comment.show {
-  opacity: 1;
-  transform: translateY(0);
+  opacity:1;
+  transform:translateY(0);
 }
 .visitor-counter {
-  position: fixed;
-  bottom: 10px;
-  right: 10px;
-  background: var(--card-bg);
-  color: var(--text-color);
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-  font-size: 0.9rem;
+  position:fixed;
+  bottom:10px;
+  right:10px;
+  background:var(--card-bg);
+  color:var(--text-color);
+  padding:0.5rem 1rem;
+  border-radius:8px;
+  box-shadow:0 2px 6px rgba(0,0,0,0.2);
+  font-size:0.9rem;
 }
 /* Login Modal */
 #loginModal {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.7);
-  justify-content: center;
-  align-items: center;
-  opacity: 0;
-  transition: opacity 0.3s ease;
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.7);
+  justify-content:center;
+  align-items:center;
+  opacity:0;
+  transition:opacity 0.3s ease;
 }
-#loginModal.show {
-  display: flex;
-  opacity: 1;
-}
+#loginModal.show { display:flex; opacity:1; }
 #loginBox {
-  background: var(--card-bg);
-  color: var(--text-color);
-  padding: 2rem;
-  border-radius: 10px;
-  text-align: center;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
-  width: 300px;
-  transform: scale(0.8);
-  transition: transform 0.3s ease;
+  background:var(--card-bg);
+  color:var(--text-color);
+  padding:2rem;
+  border-radius:10px;
+  text-align:center;
+  box-shadow:0 4px 10px rgba(0,0,0,0.4);
+  width:300px;
+  transform:scale(0.8);
+  transition:transform 0.3s ease;
 }
-#loginModal.show #loginBox { transform: scale(1); }
-#loginBox input {
-  padding: 0.5rem;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  margin-bottom: 1rem;
-  width: 100%;
-}
-#loginBox button {
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 6px;
-  background: #007bff;
-  color: white;
-  cursor: pointer;
-  margin: 0.2rem;
-}
+#loginModal.show #loginBox { transform:scale(1); }
+#loginBox input { padding:0.5rem; border-radius:6px; border:1px solid #ccc; margin-bottom:1rem; width:100%; }
+#loginBox button { padding:0.5rem 1rem; border:none; border-radius:6px; background:#007bff; color:white; cursor:pointer; margin:0.2rem; }
+
 form input, form textarea {
-  width: 100%;
-  margin-bottom: 0.5rem;
-  padding: 0.5rem;
-  border-radius: 6px;
-  border: 1px solid #ccc;
+  width:100%; margin-bottom:0.5rem; padding:0.5rem; border-radius:6px; border:1px solid #ccc;
 }
-form button {
-  padding: 0.4rem 0.8rem;
-  border-radius: 6px;
-  border: none;
-  background: #007bff;
-  color: white;
-  cursor: pointer;
-}
-.rating button { margin-right: 0.5rem; cursor: pointer; }
+form button { padding:0.4rem 0.8rem; border-radius:6px; border:none; background:#007bff; color:white; cursor:pointer; }
+.rating button { margin-right:0.5rem; cursor:pointer; }
 
 /* Responsive Mobile */
-@media (max-width: 768px) {
-  main {
-    grid-template-columns: 1fr;
-    padding: 1rem;
-  }
-  main > div:first-child { order: 2; }
-  main > div:last-child { order: 1; }
+@media (max-width:768px){
+  main { grid-template-columns:1fr; padding:1rem; }
+  main > div:first-child { order:2; }
+  main > div:last-child { order:1; }
+  /* Video zwischen Über mich und Ideenschmiede */
+  #mobileVideoContainer { order:1; margin-bottom:1rem; }
 }
 </style>
 </head>
 <body>
 <header>
-  <h1>💡 haertfelder.me</h1>
-  <div class="header-buttons">
-    <button id="darkModeBtn">🌙</button>
-    <button id="loginBtn">🦆</button>
-  </div>
+<h1>💡 haertfelder.me</h1>
+<div class="header-buttons">
+<button id="darkModeBtn">🌙</button>
+<button id="loginBtn">🦆</button>
+</div>
 </header>
 
 <main>
-  <div>
-    <div class="card">
-      <h2>Willkommen!</h2>
-      <p>Diese Seite ist hauptsächlich für mich, um meine Gedanken und Ideen jederzeit festzuhalten.</p>
-    </div>
-    <div class="card">
-      <h2>Über mich</h2>
-      <p>Geht dich garnichts an.</p>
-    </div>
-    <section class="blog" id="blog">
-      <div class="banner">💡 Ideenschmiede</div>
-      <h2>Blogeinträge</h2>
-      <div id="blogList"></div>
-    </section>
+<div>
+  <div class="card">
+    <h2>Willkommen!</h2>
+    <p>Diese Seite ist hauptsächlich für mich, um meine Gedanken und Ideen jederzeit festzuhalten.</p>
   </div>
-  <div>
-    <div class="card">
-      <h2>Video</h2>
-      <iframe id="ytVideo" width="100%" height="250"
-        src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=0&mute=0"
-        title="YouTube Video"
-        frameborder="0"
-        allow="autoplay; encrypted-media"
-        allowfullscreen></iframe>
-      <button id="playVideo" style="margin-top:0.5rem; padding:0.5rem 1rem; cursor:pointer;">▶️ Rickroll starten</button>
-    </div>
+  <div class="card">
+    <h2>Über mich</h2>
+    <p>Geht dich garnichts an.</p>
   </div>
+
+  <!-- Mobile Video Container -->
+  <div id="mobileVideoContainer" class="card">
+    <h2>Video</h2>
+    <iframe id="ytVideoMobile" width="100%" height="250" 
+      src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=0&mute=1"
+      title="YouTube Video"
+      frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+  </div>
+
+  <section class="blog" id="blog">
+    <div class="banner">💡 Ideenschmiede</div>
+    <h2>Blogeinträge</h2>
+    <div id="blogList"></div>
+  </section>
+</div>
+
+<div>
+  <div class="card">
+    <h2>Video</h2>
+    <iframe id="ytVideoDesktop" width="100%" height="250"
+      src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=0&mute=1"
+      title="YouTube Video"
+      frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+  </div>
+</div>
 </main>
 
 <div class="visitor-counter" id="visitorCounter">Besucher: 0</div>
 
 <!-- Login Modal -->
 <div id="loginModal">
-  <div id="loginBox">
-    <h2>🔑 Admin Login</h2>
-    <input type="password" id="adminPw" placeholder="Passwort">
-    <br>
-    <button id="loginSubmitBtn">Login</button>
-    <button id="loginCancelBtn">Abbrechen</button>
-  </div>
+<div id="loginBox">
+<h2>🔑 Admin Login</h2>
+<input type="password" id="adminPw" placeholder="Passwort">
+<br>
+<button id="loginSubmitBtn">Login</button>
+<button id="loginCancelBtn">Abbrechen</button>
+</div>
 </div>
 
 <script>
@@ -230,120 +207,100 @@ document.addEventListener("DOMContentLoaded", () => {
   const cancelBtn = document.getElementById("loginCancelBtn");
   const submitBtn = document.getElementById("loginSubmitBtn");
   const loginModal = document.getElementById("loginModal");
-
-  // Darkmode
   darkBtn?.addEventListener("click", () => document.body.classList.toggle("dark"));
-
-  // Login Modal
   loginBtn?.addEventListener("click", () => loginModal.classList.add("show"));
   cancelBtn?.addEventListener("click", () => loginModal.classList.remove("show"));
   submitBtn?.addEventListener("click", () => {
     const pw = document.getElementById("adminPw").value;
-    if (pw === "ichbinadmin") {
-      sessionStorage.setItem("isAdmin", "true");
-      window.location.href = "admin.html";
-    } else alert("Falsches Passwort!");
+    if(pw==="ichbinadmin"){ sessionStorage.setItem("isAdmin","true"); window.location.href="admin.html"; }
+    else alert("Falsches Passwort!");
   });
 
   // Besucherzähler
   const visitorCounter = document.getElementById("visitorCounter");
-  let count = Number(localStorage.getItem("visitorCount") || 0) + 1;
-  localStorage.setItem("visitorCount", count);
-  visitorCounter.textContent = "Besucher: " + count;
+  let count = Number(localStorage.getItem("visitorCount")||0)+1;
+  localStorage.setItem("visitorCount",count);
+  visitorCounter.textContent="Besucher: "+count;
 
-  // Blog
+  // Blog laden
   const blogList = document.getElementById("blogList");
-  const posts = JSON.parse(localStorage.getItem("blogPosts") || "[]");
+  const posts = JSON.parse(localStorage.getItem("blogPosts")||"[]");
+  function renderPosts(){
+    blogList.innerHTML="";
+    posts.forEach((post,index)=>{
+      const card=document.createElement("div"); card.className="card";
+      const title=document.createElement("h3"); title.textContent=post.title;
+      const content=document.createElement("p"); content.textContent=post.text;
 
-  function renderPosts() {
-    blogList.innerHTML = "";
-    posts.forEach((post, index) => {
-      const card = document.createElement("div");
-      card.className = "card";
-
-      const title = document.createElement("h3");
-      title.textContent = post.title;
-
-      const content = document.createElement("p");
-      content.textContent = post.text;
-
-      // Kommentarformular
-      const form = document.createElement("form");
-      form.onsubmit = e => {
+      const form=document.createElement("form");
+      form.onsubmit=e=>{
         e.preventDefault();
-        const name = form.querySelector(`#name-${index}`).value.trim();
-        const text = form.querySelector(`#comment-${index}`).value.trim();
-        if (!name || !text) return;
-        post.comments = post.comments || [];
-        post.comments.push({ name, text });
-        post.rated = post.rated || {};
-        savePosts();
-        renderPosts();
+        const name=form.querySelector(`#name-${index}`).value.trim();
+        const text=form.querySelector(`#comment-${index}`).value.trim();
+        if(!name||!text)return;
+        post.comments=post.comments||[];
+        post.comments.push({name,text});
+        post.rated=post.rated||{};
+        savePosts(); renderPosts();
       };
-      form.innerHTML = `
+      form.innerHTML=`
         <input type="text" id="name-${index}" placeholder="Dein Name" required>
         <textarea id="comment-${index}" placeholder="Kommentar..." required></textarea>
         <button type="submit">Kommentieren</button>
       `;
 
-      // Kommentarliste
-      const commentList = document.createElement("div");
-      (post.comments || []).forEach(c => {
-        const div = document.createElement("div");
-        div.className = "comment";
-        div.textContent = `${c.name}: ${c.text}`;
+      const commentList=document.createElement("div");
+      (post.comments||[]).forEach(c=>{
+        const div=document.createElement("div");
+        div.className="comment";
+        div.textContent=`${c.name}: ${c.text}`;
         commentList.appendChild(div);
-        setTimeout(() => div.classList.add("show"), 50); // Animation
+        setTimeout(()=>div.classList.add("show"),50);
       });
 
-      // Bewertung
-      const rating = document.createElement("div");
-      rating.className = "rating";
-      const upBtn = document.createElement("button");
-      upBtn.textContent = `👍 ${post.up || 0}`;
-      const downBtn = document.createElement("button");
-      downBtn.textContent = `👎 ${post.down || 0}`;
-      upBtn.onclick = () => vote(index, "up");
-      downBtn.onclick = () => vote(index, "down");
-      rating.appendChild(upBtn);
-      rating.appendChild(downBtn);
+      const rating=document.createElement("div"); rating.className="rating";
+      const upBtn=document.createElement("button"); upBtn.textContent=`👍 ${post.up||0}`;
+      const downBtn=document.createElement("button"); downBtn.textContent=`👎 ${post.down||0}`;
+      upBtn.onclick=()=>vote(index,"up");
+      downBtn.onclick=()=>vote(index,"down");
+      rating.appendChild(upBtn); rating.appendChild(downBtn);
 
-      card.appendChild(title);
-      card.appendChild(content);
-      card.appendChild(form);
-      card.appendChild(commentList);
-      card.appendChild(rating);
-      blogList.appendChild(card);
+      card.appendChild(title); card.appendChild(content); card.appendChild(form);
+      card.appendChild(commentList); card.appendChild(rating); blogList.appendChild(card);
     });
   }
 
-  function vote(postIndex, type) {
-    const name = prompt("Bitte gib deinen Namen ein, um abzustimmen:");
-    if (!name) return;
-    const post = posts[postIndex];
-    post.comments = post.comments || [];
-    if (!post.comments.some(c => c.name === name)) return alert("Du musst zuerst kommentieren!");
-    post.rated = post.rated || {};
-    if (post.rated[name]) return alert("Du hast bereits abgestimmt!");
-    if (type === "up") post.up = (post.up || 0) + 1;
-    if (type === "down") post.down = (post.down || 0) + 1;
-    post.rated[name] = true;
-    savePosts();
-    renderPosts();
+  function vote(postIndex,type){
+    const name=prompt("Bitte gib deinen Namen ein, um abzustimmen:");
+    if(!name)return;
+    const post=posts[postIndex];
+    post.comments=post.comments||[];
+    if(!post.comments.some(c=>c.name===name)) return alert("Du musst zuerst kommentieren!");
+    post.rated=post.rated||{};
+    if(post.rated[name]) return alert("Du hast bereits abgestimmt!");
+    if(type==="up") post.up=(post.up||0)+1;
+    if(type==="down") post.down=(post.down||0)+1;
+    post.rated[name]=true; savePosts(); renderPosts();
   }
 
-  function savePosts() {
-    localStorage.setItem("blogPosts", JSON.stringify(posts));
-  }
-
+  function savePosts(){ localStorage.setItem("blogPosts",JSON.stringify(posts)); }
   renderPosts();
 
-  // Video abspielen
-  const playBtn = document.getElementById("playVideo");
-  const ytVideo = document.getElementById("ytVideo");
-  playBtn.addEventListener("click", () => {
-    ytVideo.src = "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=0";
-  });
+  // Video starten bei Mausbewegung / Touch / Scroll
+  const ytDesktop=document.getElementById("ytVideoDesktop");
+  const ytMobile=document.getElementById("ytVideoMobile");
+
+  function startVideo(){
+    if(window.innerWidth>768) ytDesktop.src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=0";
+    else ytMobile.src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=0";
+    document.removeEventListener("mousemove",startVideo);
+    document.removeEventListener("touchstart",startVideo);
+    document.removeEventListener("scroll",startVideo);
+  }
+
+  document.addEventListener("mousemove",startVideo,{once:true});
+  document.addEventListener("touchstart",startVideo,{once:true});
+  document.addEventListener("scroll",startVideo,{once:true});
 });
 </script>
 </body>
